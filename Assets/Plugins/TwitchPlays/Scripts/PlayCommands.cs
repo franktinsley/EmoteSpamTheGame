@@ -38,7 +38,7 @@ public class PlayCommands : MonoBehaviour
 				str += blocks[i];
 			}
 		}
-		//Debug.Log("Got Command: " + cmd);
+		Debug.Log("Got Command: " + cmd);
 		foreach(var v in Commands)
 		{
 			

@@ -69,13 +69,13 @@ public class TwitchIRC : MonoBehaviour
             buffer = input.ReadLine();
 
             //was message?
-            //if (buffer.Contains("PRIVMSG #"))
-            //{
+            if (buffer.Contains("PRIVMSG #"))
+            {
                 lock (recievedMsgs)
                 {
                     recievedMsgs.Add(buffer);
                 }
-            //}
+            }
 
             //Send pong reply to any ping messages
             if (buffer.StartsWith("PING "))
