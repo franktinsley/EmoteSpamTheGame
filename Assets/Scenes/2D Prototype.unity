@@ -90,119 +90,6 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &703538110
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].onCommand.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 414646, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 414646, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 414646, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 414646, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 414646, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 414646, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 414646, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 414646, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11438868, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: oauth
-      value: oauth:eark5uy206f0sge8ha7cshzsyvm5td
-      objectReference: {fileID: 0}
-    - target: {fileID: 11438868, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: nickName
-      value: twitchplayskappachinko
-      objectReference: {fileID: 0}
-    - target: {fileID: 21215302, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].onCommand.m_TypeName
-      value: stringEvent, Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].name
-      value: Shoot
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].commandKey
-      value: S
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: delimiter
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[1].name
-      value: Fart
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[1].commandKey
-      value: F
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[1].onCommand.m_TypeName
-      value: stringEvent, Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].onCommand.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].onCommand.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].onCommand.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].onCommand.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 11488992, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-      propertyPath: Commands.Array.data[0].onCommand.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 21215302, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-  m_ParentPrefab: {fileID: 100100000, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &928918622
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,22 +186,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
---- !u!1 &1360291008 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 104804, guid: 03ad41995af104d2bb93427f1d9155f5, type: 2}
-  m_PrefabInternal: {fileID: 703538110}
---- !u!114 &1360291009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1360291008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c2eb25e587914eec976093d4fc9bd5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_RootOrder: 2
 --- !u!1 &1524824972
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +281,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &1591527222
 GameObject:
   m_ObjectHideFlags: 0
