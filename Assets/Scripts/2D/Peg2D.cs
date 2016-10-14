@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class Peg : MonoBehaviour
+public class Peg2D : MonoBehaviour
 {
 	public int m_Health = 1;
 
-	void OnCollisionEnter( Collision _ )
+	void OnCollisionEnter2D( Collision2D _ )
 	{
 		m_Health--;
 		if( m_Health <= 0 )

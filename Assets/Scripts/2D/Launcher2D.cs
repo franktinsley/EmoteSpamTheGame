@@ -1,50 +1,38 @@
-﻿using TwitchChatter;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Launcher2D : MonoBehaviour
 {
-	public GameObject ProjectilePrefab
-	{
-		get
-		{
-			return m_ProjectilePrefab;
-		}
-		set
-		{
-			m_ProjectilePrefab = value;
-		}
-	}
-
-	public float Power
-	{
-		get
-		{
-			return m_Power;
-		}
-		set
-		{
-			m_Power = value;
-		}
-	}
-
-	[SerializeField] GameObject m_ProjectilePrefab;
-	[SerializeField] float m_Power = 10f;
-
+	[SerializeField] float m_PushPower = 10f;
+	[SerializeField] float m_ShootPower = 10f;
+	[SerializeField] float m_ProjectileZPosition = 2f;
+	[SerializeField] SpriteRenderer m_BarrelSpriteRenderer;
 	[SerializeField] Transform m_Barrel;
+	[SerializeField] Transform m_Hinge;
+	[SerializeField] Rigidbody2D m_Rigidbody2D;
+	[SerializeField] GameObject m_ProjectilePrefab;
+
+	void Start()
+	{
+		m_Rigidbody2D.centerOfMass =
+			m_Rigidbody2D.transform.InverseTransformPoint( m_Hinge.position );
+	}
+
+	public void Push( bool right )
+	{
+		m_Rigidbody2D.AddTorque( right ? m_PushPower : -m_PushPower );
+	}
 
 	public void Launch()
 	{
 		Shoot( Spawn() );
 	}
 
-	public void Launch( TwitchChatMessage message )
+	public void Launch( Color color )
 	{
-		string hexColor = message.userNameColor;
 		var projectile = Spawn();
 		SpriteRenderer spriteRenderer = projectile.GetComponent<SpriteRenderer>();
-		Color color;
-		ColorUtility.TryParseHtmlString( hexColor, out color );
 		spriteRenderer.color = color;
+		m_BarrelSpriteRenderer.color = color;
 		Shoot( projectile );
 	}
 
@@ -52,14 +40,16 @@ public class Launcher2D : MonoBehaviour
 	{
 		return Instantiate(
 			m_ProjectilePrefab,
-			m_Barrel.position,
-			m_Barrel.rotation
-		) as GameObject;
+			new Vector3(
+				m_Barrel.position.x,
+				m_Barrel.position.y,
+				m_ProjectileZPosition ),
+			m_Barrel.rotation ) as GameObject;
 	}
 
 	void Shoot( GameObject projectile )
 	{
 		projectile.GetComponent<Rigidbody2D>()
-			.AddRelativeForce( Vector2.down * m_Power, ForceMode2D.Impulse );
+			.AddRelativeForce( Vector2.down * m_ShootPower, ForceMode2D.Impulse );
 	}
 }
