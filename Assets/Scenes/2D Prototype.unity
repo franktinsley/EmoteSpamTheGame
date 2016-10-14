@@ -3680,6 +3680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Launcher: {fileID: 1625687869}
+  m_LaunchTestCommand: s
   m_LaunchTestKey: 32
 --- !u!114 &1625687869
 MonoBehaviour:
@@ -3913,6 +3914,72 @@ Transform:
   m_PrefabParentObject: {fileID: 4000013812188826, guid: 4658b3f4d97e940be87ad3cb9eac314c,
     type: 2}
   m_PrefabInternal: {fileID: 451760863}
+--- !u!1001 &1822450019
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 11442534, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: _autoJoinChannels.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408288, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408288, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408288, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408288, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408288, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408288, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408288, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408288, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442534, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: _oAuthPassword
+      value: oauth:anuztex5piwtuwuvqsckxhbbqxyexm
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442534, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: _userName
+      value: franktinsley
+      objectReference: {fileID: 0}
+    - target: {fileID: 11442534, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: _autoJoinChannels.Array.data[0]
+      value: twitchplayskappachinko
+      objectReference: {fileID: 0}
+    - target: {fileID: 11410870, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: printChatMessages
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 153280, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 34f72a8b87ebbf74f82931452ebb838d, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1831985605
 Prefab:
   m_ObjectHideFlags: 0

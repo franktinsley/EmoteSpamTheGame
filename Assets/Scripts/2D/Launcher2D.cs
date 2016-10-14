@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TwitchChatter;
+using UnityEngine;
 
 public class Launcher2D : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class Launcher2D : MonoBehaviour
 			m_ProjectilePrefab = value;
 		}
 	}
+
 	public float Power
 	{
 		get
@@ -32,14 +34,32 @@ public class Launcher2D : MonoBehaviour
 
 	public void Launch()
 	{
-		// Spawn projectile
-		var projectile = Instantiate(
+		Shoot( Spawn() );
+	}
+
+	public void Launch( TwitchChatMessage message )
+	{
+		string hexColor = message.userNameColor;
+		var projectile = Spawn();
+		SpriteRenderer spriteRenderer = projectile.GetComponent<SpriteRenderer>();
+		Color color;
+		ColorUtility.TryParseHtmlString( hexColor, out color );
+		spriteRenderer.color = color;
+		Shoot( projectile );
+	}
+
+	GameObject Spawn()
+	{
+		return Instantiate(
 			m_ProjectilePrefab,
 			m_Barrel.position,
 			m_Barrel.rotation
 		) as GameObject;
-		// Fire
+	}
+
+	void Shoot( GameObject projectile )
+	{
 		projectile.GetComponent<Rigidbody2D>()
-			.AddRelativeForce(Vector2.down * m_Power, ForceMode2D.Impulse );
+			.AddRelativeForce( Vector2.down * m_Power, ForceMode2D.Impulse );
 	}
 }
