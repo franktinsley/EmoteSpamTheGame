@@ -8,14 +8,7 @@ public class Launcher : MonoBehaviour
 	[SerializeField] List<SpriteRenderer> m_SpriteRenderers;
 	[SerializeField] Transform m_Barrel;
 	[SerializeField] Transform m_Hinge;
-	[SerializeField] Rigidbody2D m_Rigidbody2D;
 	[SerializeField] GameObject m_ProjectilePrefab;
-
-	void Start()
-	{
-		m_Rigidbody2D.centerOfMass =
-			m_Rigidbody2D.transform.InverseTransformPoint( m_Hinge.position );
-	}
 
 	public void Launch()
 	{

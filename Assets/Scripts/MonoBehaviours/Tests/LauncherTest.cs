@@ -1,5 +1,4 @@
-﻿//using TwitchChatter;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LauncherTest : MonoBehaviour
 {
@@ -13,34 +12,4 @@ public class LauncherTest : MonoBehaviour
 			m_Launcher.Launch();
 		}
 	}
-
-	/*void Start()
-	{
-		if( TwitchChatClient.singleton != null )
-		{
-			TwitchChatClient.singleton.AddChatListener( OnChatMessage );
-		}
-	}
-
-	void OnDestroy()
-	{
-		if( TwitchChatClient.singleton != null )
-		{
-			TwitchChatClient.singleton.RemoveChatListener( OnChatMessage );
-		}
-	}
-
-	void OnChatMessage( ref TwitchChatMessage message )
-	{
-		string chatMessagePlainText = message.chatMessagePlainText;
-		foreach( var text in m_LaunchTestCommands )
-		{
-			if( chatMessagePlainText.Equals( text ) )
-			{
-				Color color;
-				ColorUtility.TryParseHtmlString( message.userNameColor, out color );
-				m_Launcher.Launch( color );
-			}
-		}
-	}*/
 }
