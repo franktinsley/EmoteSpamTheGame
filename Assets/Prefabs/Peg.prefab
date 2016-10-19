@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000013812188826}
   - 212: {fileID: 212000011624955330}
   - 58: {fileID: 58000011871922540}
+  - 50: {fileID: 50000011506818090}
   - 114: {fileID: 114000014122354590}
   m_Layer: 0
   m_Name: Peg
@@ -42,6 +43,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!50 &50000011506818090
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013640237658}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 3
 --- !u!58 &58000011871922540
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -68,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Health: 1
+  m_Rigidbody2D: {fileID: 0}
 --- !u!212 &212000011624955330
 SpriteRenderer:
   m_ObjectHideFlags: 1

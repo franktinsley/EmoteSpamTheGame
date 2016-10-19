@@ -2,7 +2,7 @@
 using System.IO;
 using UnityEngine;
 
-public class User : ScriptableObject
+public class UserData : ScriptableObject
 {
 	public string userName;
 	public string userNameColor;
@@ -12,7 +12,7 @@ public class User : ScriptableObject
 
 	const string usersDirectoryPath = "/Users";
 
-	public static void SaveUserToFile( User user )
+	public static void SaveUserToFile( UserData user )
 	{
 		string path = Application.persistentDataPath + usersDirectoryPath;
 		if( !Directory.Exists( path ) )

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Launcher : MonoBehaviour
+public class Cannon : MonoBehaviour
 {
 	[SerializeField] float m_ShootForce = 10f;
 	[SerializeField] float m_ProjectileZPosition = 2f;
@@ -10,15 +10,24 @@ public class Launcher : MonoBehaviour
 	[SerializeField] Transform m_Hinge;
 	[SerializeField] GameObject m_ProjectilePrefab;
 
-	public void Launch()
+	public void Shoot()
 	{
 		Shoot( Spawn() );
 	}
 
-	public void Launch( Color color )
+	public void Shoot( Color color )
 	{
 		var projectile = Spawn();
 		TintSpriteRenderers( color, projectile.GetComponent<SpriteRenderer>() );
+		Shoot( projectile );
+	}
+
+	public void Shoot( Color color, int emoteID )
+	{
+		GameObject projectile = Spawn();
+		TintSpriteRenderers( color, projectile.GetComponent<SpriteRenderer>() );
+		Emote emote = projectile.GetComponentInChildren<Emote>();
+		emote.SetEmote( emoteID );
 		Shoot( projectile );
 	}
 
@@ -37,6 +46,11 @@ public class Launcher : MonoBehaviour
 	{
 		projectile.GetComponent<Rigidbody2D>()
 			.AddRelativeForce( Vector2.down * m_ShootForce, ForceMode2D.Impulse );
+	}
+
+	void Shoot( List<GameObject> projectiles, string user )
+	{
+		
 	}
 
 	void TintSpriteRenderers( Color color, SpriteRenderer spriteRenderer )
