@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TwitchChatter;
 using UnityEngine;
 
@@ -12,8 +11,9 @@ public class User : MonoBehaviour
 	bool m_Shooting;
 
 	// put these in userdata
+	public Color userColor { get { return m_UserColor; } }
+
 	Color m_UserColor;
-	float m_ShotCooldown = 0.4f;
 
 	public void HandleMessage( TwitchChatMessage message )
 	{
@@ -25,26 +25,7 @@ public class User : MonoBehaviour
 			{
 				m_Cannon = GameManager.singleton.boardManager.cannon;
 			}
-			foreach( var emote in message.emoteData )
-			{
-				m_Emotes.Enqueue( emote.id );
-			}
-			if( !m_Shooting )
-			{
-				StartCoroutine( Shoot() );
-			}
+			m_Cannon.ShootEmotes( message.emoteData, this );
 		}
-	}
-		
-	IEnumerator Shoot()
-	{
-		while( m_Emotes.Count > 0 )
-		{
-			m_Shooting = true;
-			m_Cannon.Shoot( m_UserColor, m_Emotes.Dequeue() );
-			yield return new WaitForSeconds( m_ShotCooldown );
-		}
-		m_Shooting = false;
-		yield return null;
 	}
 }

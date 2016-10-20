@@ -15,11 +15,11 @@ public class Emote : MonoBehaviour
 	public void SetEmote( int emoteID )
 	{
 		m_EmoteID = emoteID;
-		m_SpriteRenderer.sprite = TwitchEmoteCache.GetSpriteForEmoteID( m_EmoteID, HandleOnLoadCallBack );
+		m_SpriteRenderer.sprite = TwitchEmoteCache.GetSpriteForEmoteID( m_EmoteID, EmoteSize.Large, HandleOnLoadCallBack );
 	}
 
-	void HandleOnLoadCallBack()
+	void HandleOnLoadCallBack( Sprite sprite )
 	{
-		m_SpriteRenderer.sprite = TwitchEmoteCache.GetSpriteForEmoteID( m_EmoteID, null );
+		m_SpriteRenderer.sprite = sprite;
 	}
 }

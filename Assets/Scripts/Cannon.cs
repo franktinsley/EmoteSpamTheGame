@@ -1,34 +1,51 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using TwitchChatter;
 
 public class Cannon : MonoBehaviour
 {
-	[SerializeField] float m_ShootForce = 10f;
+	[SerializeField] float m_SecondsBetweenShots = 0.2f;
+	[SerializeField] float m_ShootForceMultiplier = 10f;
 	[SerializeField] float m_ProjectileZPosition = 2f;
 	[SerializeField] List<SpriteRenderer> m_SpriteRenderers;
 	[SerializeField] Transform m_Barrel;
-	[SerializeField] Transform m_Hinge;
 	[SerializeField] GameObject m_ProjectilePrefab;
 
-	public void Shoot()
+	Queue<Shot> m_Shots = new Queue<Shot>();
+	bool m_Shooting;
+
+	public void ShootEmotes( TwitchChatMessage.EmoteData[] emoteData, User user )
 	{
-		Shoot( Spawn() );
+		EnqueueEmoteShots( emoteData, user );
+		if( !m_Shooting )
+		{
+			StartCoroutine( ShootCoroutine() );
+		}
 	}
 
-	public void Shoot( Color color )
-	{
-		var projectile = Spawn();
-		TintSpriteRenderers( color, projectile.GetComponent<SpriteRenderer>() );
-		Shoot( projectile );
-	}
-
-	public void Shoot( Color color, int emoteID )
+	void Shoot( Shot shot )
 	{
 		GameObject projectile = Spawn();
-		TintSpriteRenderers( color, projectile.GetComponent<SpriteRenderer>() );
 		Emote emote = projectile.GetComponentInChildren<Emote>();
-		emote.SetEmote( emoteID );
-		Shoot( projectile );
+		emote.SetEmote( shot.emoteID );
+		TintSpriteRenderers( shot.user.userColor );
+		Rigidbody2D projectileRigidbody =
+			projectile.GetComponent<Rigidbody2D>();
+		projectileRigidbody.AddRelativeForce(
+			Vector2.down * m_ShootForceMultiplier, ForceMode2D.Impulse );
+	}
+
+	IEnumerator ShootCoroutine()
+	{
+		while( m_Shots.Count > 0 )
+		{
+			m_Shooting = true;
+			Shoot( m_Shots.Dequeue() );
+			yield return new WaitForSeconds( m_SecondsBetweenShots );
+		}
+		m_Shooting = false;
+		yield return null;
 	}
 
 	GameObject Spawn()
@@ -41,21 +58,18 @@ public class Cannon : MonoBehaviour
 				m_ProjectileZPosition ),
 			m_Barrel.rotation ) as GameObject;
 	}
-
-	void Shoot( GameObject projectile )
-	{
-		projectile.GetComponent<Rigidbody2D>()
-			.AddRelativeForce( Vector2.down * m_ShootForce, ForceMode2D.Impulse );
-	}
-
-	void Shoot( List<GameObject> projectiles, string user )
-	{
 		
+	void EnqueueEmoteShots( TwitchChatMessage.EmoteData[] emoteData, User user )
+	{
+		foreach( var emote in emoteData )
+		{
+			var shot = new Shot( user, emote.id );
+			m_Shots.Enqueue( shot );
+		}
 	}
 
-	void TintSpriteRenderers( Color color, SpriteRenderer spriteRenderer )
+	void TintSpriteRenderers( Color color )
 	{
-		spriteRenderer.color = color;
 		foreach( var _spriteRenderer in m_SpriteRenderers )
 		{
 			_spriteRenderer.color = color;
