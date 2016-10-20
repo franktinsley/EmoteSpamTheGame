@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TwitchChatter;
+using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
@@ -29,7 +29,9 @@ public class Cannon : MonoBehaviour
 		GameObject projectile = Spawn();
 		Emote emote = projectile.GetComponentInChildren<Emote>();
 		emote.SetEmote( shot.emoteID );
-		TintSpriteRenderers( shot.user.userColor );
+		Color userNameColor;
+		ColorUtility.TryParseHtmlString( shot.user.userData.userNameColor, out userNameColor );
+		TintSpriteRenderers( userNameColor );
 		Rigidbody2D projectileRigidbody =
 			projectile.GetComponent<Rigidbody2D>();
 		projectileRigidbody.AddRelativeForce(

@@ -5,9 +5,12 @@ public static class JsonScriptableObject
 {
 	public static T LoadFromFile<T>( string path ) where T : ScriptableObject
 	{
-		string json = File.ReadAllText( path );
 		T instance = ScriptableObject.CreateInstance<T>();
-		JsonUtility.FromJsonOverwrite( json, instance );
+		if( File.Exists( path ) )
+		{
+			string json = File.ReadAllText( path );
+			JsonUtility.FromJsonOverwrite( json, instance );
+		}
 		return instance;
 	}
 
