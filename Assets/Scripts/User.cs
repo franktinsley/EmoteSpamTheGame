@@ -15,6 +15,15 @@ public class User : MonoBehaviour
 
 	Color m_UserColor;
 
+	public static User Initialize( string userName, Transform parent )
+	{
+		var userGameObject = new GameObject( userName );
+		userGameObject.transform.parent = parent;
+		var messageUser = userGameObject.AddComponent<User>();
+		// need to load all the saved data?
+		return messageUser;
+	}
+
 	public void HandleMessage( TwitchChatMessage message )
 	{
 		ColorUtility.TryParseHtmlString( message.userNameColor, out m_UserColor );
@@ -27,5 +36,10 @@ public class User : MonoBehaviour
 			}
 			m_Cannon.ShootEmotes( message.emoteData, this );
 		}
+	}
+
+	void OnDisable()
+	{
+		// Save UserData json file
 	}
 }

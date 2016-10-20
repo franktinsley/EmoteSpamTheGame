@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UserData : ScriptableObject
 {
@@ -9,23 +7,4 @@ public class UserData : ScriptableObject
 	public bool isSubscriber;
 	public bool isTurbo;
 	public bool isMod;
-
-	const string usersDirectoryPath = "/Users";
-
-	public static void SaveUserToFile( UserData user )
-	{
-		string path = Application.persistentDataPath + usersDirectoryPath;
-		if( !Directory.Exists( path ) )
-		{
-			Directory.CreateDirectory( path );
-		}
-		path += "/" + user.userName + ".json";
-		string jsonUser = JsonUtility.ToJson( user );
-		File.WriteAllText( path, jsonUser );
-	}
-
-	/*public static User LoadUserFromFile( string userName )
-	{
-		
-	}*/
 }
