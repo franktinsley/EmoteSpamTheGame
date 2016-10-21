@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent( typeof( SpriteRenderer ) )]
 public class Emote : MonoBehaviour
 {
+	public User owner;
+
 	SpriteRenderer m_SpriteRenderer;
 	int m_EmoteID;
 

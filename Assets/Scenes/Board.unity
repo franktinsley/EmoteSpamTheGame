@@ -536,7 +536,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1434638118
 Transform:
@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Script: {fileID: -1469470840, guid: 2ad1c87637143be41979646dba463533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loadingIcon: {fileID: 21300000, guid: e07aa5e8555d9ff408783234f4f181b0, type: 3}
+  _loadingIcon: {fileID: 21300000, guid: e6074fbbb80a2f4449ce524181f15c8f, type: 3}
   _invalidIcon: {fileID: 21300000, guid: 6fa176235c1d98a449d3d81747073d00, type: 3}
 --- !u!114 &1457410047
 MonoBehaviour:
@@ -629,7 +629,7 @@ MonoBehaviour:
   _oAuthPassword: oauth:yl5rqxpj0u67tkggdaz357c2zxcxt4
   _autoJoinChannels:
   - twitchplayskappachinko
-  - dansgaming
+  - witwix
   _autoEnableWhispers: 0
 --- !u!4 &1457410048
 Transform:
@@ -889,7 +889,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &1818704927
 Transform:

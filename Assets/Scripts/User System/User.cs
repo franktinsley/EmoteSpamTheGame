@@ -3,10 +3,23 @@ using UnityEngine;
 
 public class User : MonoBehaviour
 {
-	[SerializeField] public UserData userData;
+	public UserData userData;
 
 	string m_UserDataFilePath;
 	Cannon m_Cannon;
+
+	void Start()
+	{
+		if( m_Cannon == null )
+		{
+			m_Cannon = GameManager.singleton.boardManager.cannon;
+		}
+	}
+
+	void OnDisable()
+	{
+		JsonScriptableObject.SaveToFile<UserData>( userData, m_UserDataFilePath );
+	}
 
 	public static User Initialize( string userName, string userDataFilePath, Transform parent )
 	{
@@ -24,10 +37,6 @@ public class User : MonoBehaviour
 
 		if( message.emoteData != null )
 		{
-			if( m_Cannon == null )
-			{
-				m_Cannon = GameManager.singleton.boardManager.cannon;
-			}
 			m_Cannon.ShootEmotes( message.emoteData, this );
 		}
 	}
@@ -39,10 +48,5 @@ public class User : MonoBehaviour
 		userData.isSubscriber = message.isSubscriber;
 		userData.isTurbo = message.isTurbo;
 		userData.isMod = message.isMod;
-	}
-
-	void OnDisable()
-	{
-		JsonScriptableObject.SaveToFile<UserData>( userData, m_UserDataFilePath );
 	}
 }

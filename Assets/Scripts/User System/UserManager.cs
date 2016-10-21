@@ -23,6 +23,20 @@ public class UserManager : MonoBehaviour
 		SaveUserList();
 	}
 
+	public void HandleChatMessage( TwitchChatMessage message )
+	{
+		string userName = message.userName;
+		User messageUser;
+		if( !m_Users.TryGetValue( userName, out messageUser ) )
+		{
+			string path = Application.persistentDataPath +
+				usersDirectory + userName + jsonFileExtension;
+			messageUser = User.Initialize( userName, path, transform );
+			m_Users.Add( message.userName, messageUser );
+		}
+		messageUser.HandleMessage( message );
+	}
+
 	void LoadUserList()
 	{
 		if( !Directory.Exists( Application.persistentDataPath + usersDirectory ) )
@@ -54,19 +68,5 @@ public class UserManager : MonoBehaviour
 		m_Users.Keys.CopyTo( userNames, 0 );
 		m_UserList.userNames = userNames;
 		JsonScriptableObject.SaveToFile<UserList>( m_UserList, m_UserListFilePath );
-	}
-
-	public void HandleChatMessage( TwitchChatMessage message )
-	{
-		string userName = message.userName;
-		User messageUser;
-		if( !m_Users.TryGetValue( userName, out messageUser ) )
-		{
-			string path = Application.persistentDataPath +
-				usersDirectory + userName + jsonFileExtension;
-			messageUser = User.Initialize( userName, path, transform );
-			m_Users.Add( message.userName, messageUser );
-		}
-		messageUser.HandleMessage( message );
 	}
 }

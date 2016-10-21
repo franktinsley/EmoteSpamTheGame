@@ -28,6 +28,7 @@ public class Cannon : MonoBehaviour
 	{
 		GameObject projectile = Spawn();
 		Emote emote = projectile.GetComponentInChildren<Emote>();
+		emote.owner = shot.user;
 		emote.SetEmote( shot.emoteID );
 		Color userNameColor;
 		ColorUtility.TryParseHtmlString( shot.user.userData.userNameColor, out userNameColor );
