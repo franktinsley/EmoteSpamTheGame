@@ -1,20 +1,18 @@
-﻿using TwitchChatter;
+﻿using System.Collections;
+using System.Collections.Generic;
+using TwitchChatter;
 using UnityEngine;
 
 public class User : MonoBehaviour
 {
+	const float m_SecondsBetweenShots = 0.2f;
+
 	public UserData userData;
 
 	string m_UserDataFilePath;
 	Cannon m_Cannon;
-
-	void Start()
-	{
-		if( m_Cannon == null )
-		{
-			m_Cannon = GameManager.singleton.boardManager.cannon;
-		}
-	}
+	Queue<GameObject> m_Shots = new Queue<GameObject>();
+	bool m_Shooting;
 
 	void OnDisable()
 	{
@@ -28,6 +26,7 @@ public class User : MonoBehaviour
 		var user = userGameObject.AddComponent<User>();
 		user.userData = JsonScriptableObject.LoadFromFile<UserData>( userDataFilePath );
 		user.m_UserDataFilePath = userDataFilePath;
+		user.m_Cannon = GameManager.singleton.boardManager.cannon;
 		return user;
 	}
 
@@ -37,7 +36,7 @@ public class User : MonoBehaviour
 
 		if( message.emoteData != null )
 		{
-			m_Cannon.ShootEmotes( message.emoteData, this );
+			ShootEmotes( message.emoteData );
 		}
 	}
 
@@ -48,5 +47,35 @@ public class User : MonoBehaviour
 		userData.isSubscriber = message.isSubscriber;
 		userData.isTurbo = message.isTurbo;
 		userData.isMod = message.isMod;
+	}
+
+	void ShootEmotes( TwitchChatMessage.EmoteData[] emoteData )
+	{
+		EnqueueEmoteShots( emoteData );
+		if( !m_Shooting )
+		{
+			StartCoroutine( ShootCoroutine() );
+		}
+	}
+
+	void EnqueueEmoteShots( TwitchChatMessage.EmoteData[] emoteData )
+	{
+		foreach( var emote in emoteData )
+		{
+			GameObject emoteGameObject = Emote.InstantiateEmoteGameObject( emote.id, this );
+			m_Shots.Enqueue( emoteGameObject );
+		}
+	}
+
+	IEnumerator ShootCoroutine()
+	{
+		while( m_Shots.Count > 0 )
+		{
+			m_Shooting = true;
+			m_Cannon.Shoot( m_Shots.Dequeue() );
+			yield return new WaitForSeconds( m_SecondsBetweenShots );
+		}
+		m_Shooting = false;
+		yield return null;
 	}
 }

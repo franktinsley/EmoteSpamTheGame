@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class BoardManager : MonoBehaviour
 {
-	public Cannon cannon { get { return m_Cannon; } }
+	[HideInInspector] public UnityEvent freezeBoard;
 
-	[SerializeField] Cannon m_Cannon;
-	[SerializeField] GameObject m_PegPrefab;
-	//[SerializeField] int m_StartingNumberOfPegs = 30;
+	public Cannon cannon;
+	public GameObject emotePrefab;
+	public GameObject pegPrefab;
+
+	[SerializeField] int m_StartingNumberOfPegs = 30;
 
 	public void CreateBoard()
 	{
-		
+		for( int i = 0; i < m_StartingNumberOfPegs; i++ )
+		{
+		}
 	}
 }

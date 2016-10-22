@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d11473d7ed9428c9e38ad9cf1e638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emotePrefab: {fileID: 0}
   m_CurrentGameState: {fileID: 11400000, guid: 6b1ca7a220ace4d15a055090b60b8f7f, type: 2}
   m_PossibleGameStates:
   - {fileID: 11400000, guid: 6b1ca7a220ace4d15a055090b60b8f7f, type: 2}
@@ -562,9 +563,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebad20b950c5483b96c3652c9d0ab3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Cannon: {fileID: 1625687869}
-  m_PegPrefab: {fileID: 1000013640237658, guid: 4658b3f4d97e940be87ad3cb9eac314c,
+  freezeBoard:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  cannon: {fileID: 1625687869}
+  emotePrefab: {fileID: 1000013607543106, guid: 09b53ff9bc793457fb6749deee31b06e,
     type: 2}
+  pegPrefab: {fileID: 1000013640237658, guid: 4658b3f4d97e940be87ad3cb9eac314c, type: 2}
+  m_StartingNumberOfPegs: 30
 --- !u!1 &1457410044
 GameObject:
   m_ObjectHideFlags: 0
@@ -779,15 +787,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e87ba1e52d0747e881c0e0ab3c3e911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SecondsBetweenShots: 0.2
   m_ShootForceMultiplier: 10
   m_ProjectileZPosition: 2
   m_SpriteRenderers:
   - {fileID: 1625687866}
   - {fileID: 513946533}
   m_Barrel: {fileID: 513946532}
-  m_ProjectilePrefab: {fileID: 1000013607543106, guid: 09b53ff9bc793457fb6749deee31b06e,
-    type: 2}
 --- !u!1 &1802640874
 GameObject:
   m_ObjectHideFlags: 0

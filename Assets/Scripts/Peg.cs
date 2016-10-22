@@ -2,8 +2,16 @@
 
 public class Peg : MonoBehaviour
 {
-	public int m_Health = 1;
-	public bool m_Invincible;
+	[SerializeField] int m_Health = 1;
+	[SerializeField] bool m_Invincible;
+
+	BoardManager m_BoardManager;
+
+	void Start()
+	{
+		m_BoardManager = GameManager.singleton.boardManager;
+		m_BoardManager.freezeBoard.AddListener( Freeze );
+	}
 
 	void OnCollisionEnter2D( Collision2D _ )
 	{
@@ -15,5 +23,10 @@ public class Peg : MonoBehaviour
 				Destroy( gameObject );
 			}
 		}
+	}
+
+	public void Freeze()
+	{
+		
 	}
 }
