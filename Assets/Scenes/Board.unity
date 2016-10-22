@@ -117,7 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d11473d7ed9428c9e38ad9cf1e638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emotePrefab: {fileID: 0}
   m_CurrentGameState: {fileID: 11400000, guid: 6b1ca7a220ace4d15a055090b60b8f7f, type: 2}
   m_PossibleGameStates:
   - {fileID: 11400000, guid: 6b1ca7a220ace4d15a055090b60b8f7f, type: 2}
@@ -636,8 +635,7 @@ MonoBehaviour:
   _userName: twitchplayskappachinko
   _oAuthPassword: oauth:yl5rqxpj0u67tkggdaz357c2zxcxt4
   _autoJoinChannels:
-  - twitchplayskappachinko
-  - witwix
+  - emotespamthegame
   _autoEnableWhispers: 0
 --- !u!4 &1457410048
 Transform:

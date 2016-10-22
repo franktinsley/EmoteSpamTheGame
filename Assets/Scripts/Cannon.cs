@@ -18,10 +18,12 @@ public class Cannon : MonoBehaviour
 				emote.owner.userData.userNameColor, out userNameColor );
 			TintSpriteRenderers( userNameColor );
 		}
+		projectile.GetComponent<HiddenGameObject>().isHidden = false;
 		projectile.transform.position = new Vector3(
 			m_Barrel.position.x,
 			m_Barrel.position.y,
 			m_ProjectileZPosition );
+		projectile.transform.rotation = m_Barrel.rotation;
 		Rigidbody2D projectileRigidbody =
 			projectile.GetComponent<Rigidbody2D>();
 		projectileRigidbody.AddRelativeForce(
