@@ -33,6 +33,9 @@ public class Emote : MonoBehaviour
 
 	void HandleOnLoadCallBack( Sprite sprite )
 	{
-		m_SpriteRenderer.sprite = sprite;
+		if( m_SpriteRenderer != null )
+		{
+			m_SpriteRenderer.sprite = sprite;
+		}
 	}
 }

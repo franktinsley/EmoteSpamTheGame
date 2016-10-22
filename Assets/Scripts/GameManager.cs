@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 	public GameState currentGameState { get { return m_CurrentGameState; } }
 	public List<GameState> possibleGameStates { get { return m_PossibleGameStates; } }
 	public BoardManager boardManager { get { return m_BoardManager; } }
+	public bool allowMessages;
 
 	[SerializeField] GameState m_CurrentGameState;
 	[SerializeField] List<GameState> m_PossibleGameStates;
@@ -63,7 +64,10 @@ public class GameManager : MonoBehaviour
 
 	void OnChatMessage( ref TwitchChatMessage message )
 	{
-		m_UserManager.HandleChatMessage( message );
+		if( allowMessages )
+		{
+			m_UserManager.HandleChatMessage( message );
+		}
 	}
 
 	void StartGame()

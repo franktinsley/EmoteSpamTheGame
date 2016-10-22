@@ -40,6 +40,11 @@ public class User : MonoBehaviour
 		}
 	}
 
+	public void ScorePop()
+	{
+		userData.points++;
+	}
+
 	void UpdateUserData( TwitchChatMessage message )
 	{
 		userData.userName = message.userName;
