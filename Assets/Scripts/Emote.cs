@@ -11,8 +11,10 @@ public class Emote : MonoBehaviour
 
 	public static GameObject InstantiateEmoteGameObject( int id, User owner )
 	{
+		BoardManager boardManager = GameManager.singleton.boardManager;
 		GameObject emoteGameObject =
-			Instantiate( GameManager.singleton.boardManager.emotePrefab );
+			Instantiate( boardManager.emotePrefab );
+		emoteGameObject.transform.parent = boardManager.emoteParent;
 		Emote emote = emoteGameObject.GetComponent<Emote>();
 		emote.owner = owner;
 		emote.SetEmote( id );

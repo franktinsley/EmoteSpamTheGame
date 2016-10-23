@@ -14,6 +14,7 @@ public class Peg : MonoBehaviour
 		{
 			Destroy( _rigidbody2D );
 		}
+		gameObject.isStatic = true;
 		m_BoardManager.freezeBoard.RemoveListener( Freeze );
 		m_Invincible = false;
 	}

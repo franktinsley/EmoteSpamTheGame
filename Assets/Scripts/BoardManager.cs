@@ -15,6 +15,8 @@ public class BoardManager : MonoBehaviour
 	public GameObject emotePrefab;
 	public GameObject pegPrefab;
 	public GameObject pegWalls;
+	public Transform pegParent;
+	public Transform emoteParent;
 
 	public void CreateBoard()
 	{
@@ -30,6 +32,7 @@ public class BoardManager : MonoBehaviour
 		for( int i = 0; i < m_StartingNumberOfPegs; i++ )
 		{
 			GameObject pegGameObject = Instantiate( pegPrefab );
+			pegGameObject.transform.parent = pegParent;
 			cannon.Shoot( pegGameObject );
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}

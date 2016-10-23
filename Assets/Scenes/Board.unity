@@ -117,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d11473d7ed9428c9e38ad9cf1e638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowMessages: 0
   m_CurrentGameState: {fileID: 11400000, guid: 6b1ca7a220ace4d15a055090b60b8f7f, type: 2}
   m_PossibleGameStates:
   - {fileID: 11400000, guid: 6b1ca7a220ace4d15a055090b60b8f7f, type: 2}
@@ -247,6 +248,34 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &541506172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 541506173}
+  m_Layer: 0
+  m_Name: Emotes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &541506173
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 541506172}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
 --- !u!1 &606167365
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,6 +378,34 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
+--- !u!1 &666608123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 666608124}
+  m_Layer: 0
+  m_Name: Pegs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &666608124
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 666608123}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
 --- !u!1 &732207765
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +533,7 @@ Transform:
   - {fileID: 1608521178}
   - {fileID: 1054681217}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
 --- !u!1 &1054681216
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +753,8 @@ MonoBehaviour:
     type: 2}
   pegPrefab: {fileID: 1000013640237658, guid: 4658b3f4d97e940be87ad3cb9eac314c, type: 2}
   pegWalls: {fileID: 1054681216}
+  pegParent: {fileID: 666608124}
+  emoteParent: {fileID: 541506173}
 --- !u!1 &1457410044
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,7 +1060,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
 --- !u!1 &1818704926
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,4 +1132,4 @@ Transform:
   - {fileID: 1434638118}
   - {fileID: 1457410048}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
