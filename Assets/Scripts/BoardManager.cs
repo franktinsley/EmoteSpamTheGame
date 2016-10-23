@@ -6,7 +6,7 @@ public class BoardManager : MonoBehaviour
 {
 	const float m_SecondsBetweenShots = 0.05f;
 	const float m_SecondsToLetPegsBounce = 2f;
-	const int m_StartingNumberOfPegs = 400;
+	const int m_StartingNumberOfPegs = 200;
 
 	[HideInInspector] public UnityEvent freezeBoard;
 

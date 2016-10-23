@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TwitchChatter;
 using UnityEngine;
 
-public class User : MonoBehaviour
+public class User : MonoBehaviour, IComparable<User>
 {
 	const float m_SecondsBetweenShots = 0.2f;
 
@@ -13,6 +14,16 @@ public class User : MonoBehaviour
 	Cannon m_Cannon;
 	Queue<GameObject> m_Shots = new Queue<GameObject>();
 	bool m_Shooting;
+
+	public int CompareTo( User other )
+	{
+		if( userData.points == other.userData.points )
+		{
+			return userData.userName.CompareTo( other.userData.userName );
+		}
+
+		return other.userData.points.CompareTo( userData.points );
+	}
 
 	void OnDisable()
 	{
@@ -43,6 +54,7 @@ public class User : MonoBehaviour
 	public void ScorePop()
 	{
 		userData.points++;
+		Leaderboard.singleton.UpdateScore();
 	}
 
 	void UpdateUserData( TwitchChatMessage message )
@@ -82,5 +94,10 @@ public class User : MonoBehaviour
 		}
 		m_Shooting = false;
 		yield return null;
+	}
+
+	public override string ToString()
+	{
+		return "<color=" + userData.userNameColor + ">" + userData.userName + "</color> - " + userData.points;
 	}
 }

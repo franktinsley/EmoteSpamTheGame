@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class UserManager : MonoBehaviour
 {
+	public Dictionary<string, User> m_Users;
 	UserList m_UserList;
-	Dictionary<string, User> m_Users;
 	string m_UserListFilePath;
 
 	const string usersDirectory = "/Users/";
@@ -60,6 +60,8 @@ public class UserManager : MonoBehaviour
 				m_Users.Add( userName, user );
 			}
 		}
+
+		Leaderboard.singleton.UpdateScore();
 	}
 
 	void SaveUserList()

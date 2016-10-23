@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Peg : MonoBehaviour
 {
+	static int count;
+
 	[SerializeField] bool m_Invincible;
 	[SerializeField] int m_Health = 1;
 
@@ -21,6 +24,7 @@ public class Peg : MonoBehaviour
 
 	void Start()
 	{
+		count++;
 		m_BoardManager = GameManager.singleton.boardManager;
 		m_BoardManager.freezeBoard.AddListener( Freeze );
 	}
@@ -36,6 +40,11 @@ public class Peg : MonoBehaviour
 				if( emote != null )
 				{
 					emote.owner.ScorePop();
+				}
+				count--;
+				if( count < 1 )
+				{
+					SceneManager.LoadScene( SceneManager.GetActiveScene().buildIndex );
 				}
 				Destroy( gameObject );
 			}

@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-	public static GameManager singleton
-	{
-		get
-		{
-			return _singleton;
-		}
-	}
+	public static GameManager singleton { get { return m_Singleton; } }
 
 	public GameState currentGameState { get { return m_CurrentGameState; } }
 	public List<GameState> possibleGameStates { get { return m_PossibleGameStates; } }
 	public BoardManager boardManager { get { return m_BoardManager; } }
+	public UserManager userManager { get { return m_UserManager; } }
 	public bool allowMessages;
 
 	[SerializeField] GameState m_CurrentGameState;
@@ -22,11 +17,11 @@ public class GameManager : MonoBehaviour
 	[SerializeField] UserManager m_UserManager;
 	[SerializeField] BoardManager m_BoardManager;
 
-	static GameManager _singleton;
+	static GameManager m_Singleton;
 
 	void Awake()
 	{
-		_singleton = this;
+		m_Singleton = this;
 	}
 
 	void Start()
