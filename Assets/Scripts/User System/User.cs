@@ -4,26 +4,17 @@ using System.Collections.Generic;
 using TwitchChatter;
 using UnityEngine;
 
-public class User : MonoBehaviour, IComparable<User>
+public class User : MonoBehaviour
 {
 	const float m_SecondsBetweenShots = 0.2f;
+	const int m_popScore = 10;
 
 	public UserData userData;
 
 	string m_UserDataFilePath;
-	Cannon m_Cannon;
+	Turret m_Cannon;
 	Queue<GameObject> m_Shots = new Queue<GameObject>();
 	bool m_Shooting;
-
-	public int CompareTo( User other )
-	{
-		if( userData.points == other.userData.points )
-		{
-			return userData.userName.CompareTo( other.userData.userName );
-		}
-
-		return other.userData.points.CompareTo( userData.points );
-	}
 
 	void OnDisable()
 	{
@@ -36,8 +27,13 @@ public class User : MonoBehaviour, IComparable<User>
 		userGameObject.transform.parent = parent;
 		var user = userGameObject.AddComponent<User>();
 		user.userData = JsonScriptableObject.LoadFromFile<UserData>( userDataFilePath );
+		if( user.userData.userName == null )
+		{
+			user.userData.userName = userName;
+		}
 		user.m_UserDataFilePath = userDataFilePath;
-		user.m_Cannon = GameManager.singleton.boardManager.cannon;
+		user.m_Cannon = GameManager.singleton.boardManager.turret;
+		Leaderboard.singleton.UpdateScore( user.userData );
 		return user;
 	}
 
@@ -53,8 +49,8 @@ public class User : MonoBehaviour, IComparable<User>
 
 	public void ScorePop()
 	{
-		userData.points++;
-		Leaderboard.singleton.UpdateScore();
+		userData.score += m_popScore;
+		Leaderboard.singleton.UpdateScore( userData );
 	}
 
 	void UpdateUserData( TwitchChatMessage message )
@@ -90,14 +86,14 @@ public class User : MonoBehaviour, IComparable<User>
 		{
 			m_Shooting = true;
 			m_Cannon.Shoot( m_Shots.Dequeue() );
+			if( userData.score > 0 )
+			{
+				userData.score--;
+				Leaderboard.singleton.UpdateScore( userData );
+			}
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}
 		m_Shooting = false;
 		yield return null;
-	}
-
-	public override string ToString()
-	{
-		return "<color=" + userData.userNameColor + ">" + userData.userName + "</color> - " + userData.points;
 	}
 }

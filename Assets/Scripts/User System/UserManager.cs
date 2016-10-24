@@ -60,8 +60,6 @@ public class UserManager : MonoBehaviour
 				m_Users.Add( userName, user );
 			}
 		}
-
-		Leaderboard.singleton.UpdateScore();
 	}
 
 	void SaveUserList()

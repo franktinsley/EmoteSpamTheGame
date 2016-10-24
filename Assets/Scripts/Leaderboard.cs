@@ -9,31 +9,34 @@ public class Leaderboard : MonoBehaviour
 	static Leaderboard m_Singleton;
 
 	public string leadingText = "Leaderboard:\n";
-	public int count = 20;
+	public int count = 50;
 
-	UserManager m_UserManager;
 	Text m_Text;
-	List<User> m_Users;
+	SortedList<string, UserData> m_PlayerScores;
 
-	public void UpdateScore()
+	public void UpdateScore( UserData userData )
 	{
-		m_Users = new List<User>( m_UserManager.m_Users.Values );
-		m_Users.Sort();
-		m_Text.text = leadingText;
-		for( int i = 0; i < count; i++ )
+		if( !m_PlayerScores.ContainsKey( userData.userName ) )
 		{
-			m_Text.text += ( i + 1 ) + " - " + m_Users[ i ] + "\n";
+			m_PlayerScores.Add( userData.userName, userData );
+		}
+
+		m_Text.text = leadingText;
+		int limit = count > m_PlayerScores.Count ? m_PlayerScores.Count : count;
+		for( int i = 0; i < limit; i++ )
+		{
+			m_Text.text += ( i + 1 ) + " - " + m_PlayerScores.Values[ i ] + "\n";
 		}
 	}
 
 	void Awake()
 	{
 		m_Singleton = this;
+		m_PlayerScores = new SortedList<string, UserData>();
 	}
 
 	void Start()
 	{
-		m_UserManager = GameManager.singleton.userManager;
 		m_Text = GetComponent<Text>();
 	}
 }

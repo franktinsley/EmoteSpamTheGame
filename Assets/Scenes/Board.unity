@@ -256,7 +256,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 513946532}
   - 212: {fileID: 513946533}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,8 +273,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.1, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children:
-  - {fileID: 632793321}
+  m_Children: []
   m_Father: {fileID: 606167366}
   m_RootOrder: 0
 --- !u!212 &513946533
@@ -347,7 +346,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 606167366}
   - 95: {fileID: 606167367}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Barrel Motor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +366,7 @@ Transform:
   m_Children:
   - {fileID: 513946532}
   m_Father: {fileID: 1625687867}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!95 &606167367
 Animator:
   serializedVersion: 3
@@ -395,7 +394,7 @@ GameObject:
   - 4: {fileID: 632793321}
   - 58: {fileID: 632793323}
   - 114: {fileID: 632793322}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Overlap Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,11 +408,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 632793320}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.031, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 513946532}
+  m_Father: {fileID: 1625687867}
   m_RootOrder: 0
 --- !u!114 &632793322
 MonoBehaviour:
@@ -435,11 +434,11 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.25
+  m_Radius: 0.33
 --- !u!1 &666608123
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,8 +663,9 @@ GameObject:
   - 222: {fileID: 784446359}
   - 114: {fileID: 784446358}
   - 114: {fileID: 784446357}
+  - 114: {fileID: 784446360}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Leaderboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -703,7 +703,7 @@ MonoBehaviour:
   leadingText: 'Leaderboard:
 
 '
-  count: 20
+  count: 50
 --- !u!114 &784446358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +745,20 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 784446355}
+--- !u!114 &784446360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 784446355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &807208838
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,7 +1008,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  cannon: {fileID: 1625687869}
+  turret: {fileID: 1625687869}
   barrelMotor: {fileID: 606167367}
   emotePrefab: {fileID: 1000013607543106, guid: 09b53ff9bc793457fb6749deee31b06e,
     type: 2}
@@ -1066,7 +1080,6 @@ MonoBehaviour:
   _oAuthPassword: oauth:yl5rqxpj0u67tkggdaz357c2zxcxt4
   _autoJoinChannels:
   - emotespamthegame
-  - riotgames
   _autoEnableWhispers: 0
 --- !u!4 &1457410048
 Transform:
@@ -1151,8 +1164,8 @@ GameObject:
   - 4: {fileID: 1625687867}
   - 212: {fileID: 1625687866}
   - 114: {fileID: 1625687869}
-  m_Layer: 8
-  m_Name: Cannon
+  m_Layer: 0
+  m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1202,6 +1215,7 @@ Transform:
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 632793321}
   - {fileID: 606167366}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1213,7 +1227,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1625687865}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e87ba1e52d0747e881c0e0ab3c3e911, type: 3}
+  m_Script: {fileID: 11500000, guid: cfe39d8261e25416eb2aac19e3371e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShootForceMultiplier: 20

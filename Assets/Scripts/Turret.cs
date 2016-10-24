@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Cannon : MonoBehaviour
+public class Turret : MonoBehaviour
 {
 	[SerializeField] float m_ShootForceMultiplier = 10f;
 	[SerializeField] float m_ProjectileZPosition = 2f;
@@ -10,6 +10,8 @@ public class Cannon : MonoBehaviour
 
 	public void Shoot( GameObject projectile )
 	{
+		// TODO: Make the projectile game objects that want to color the
+		// turret color it instead of the turret doing it
 		var emote = projectile.GetComponentInChildren<Emote>();
 		if( emote != null )
 		{
