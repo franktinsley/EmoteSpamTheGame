@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TwitchChatter;
 using UnityEngine;
@@ -21,6 +20,14 @@ public class User : MonoBehaviour
 		JsonScriptableObject.SaveToFile<UserData>( userData, m_UserDataFilePath );
 	}
 
+	void OnDestroy()
+	{
+		if( GameManager.singleton.boardManager != null )
+		{
+			GameManager.singleton.boardManager.boardReset.RemoveListener( OnBoardReset );
+		}
+	}
+
 	public static User Initialize( string userName, string userDataFilePath, Transform parent )
 	{
 		var userGameObject = new GameObject( userName );
@@ -33,6 +40,7 @@ public class User : MonoBehaviour
 		}
 		user.m_UserDataFilePath = userDataFilePath;
 		user.m_Cannon = GameManager.singleton.boardManager.turret;
+		GameManager.singleton.boardManager.boardReset.AddListener( user.OnBoardReset );
 		Leaderboard.singleton.UpdateScore( user.userData );
 		return user;
 	}
@@ -95,5 +103,10 @@ public class User : MonoBehaviour
 		}
 		m_Shooting = false;
 		yield return null;
+	}
+
+	void OnBoardReset()
+	{
+		m_Shots = new Queue<GameObject>();
 	}
 }

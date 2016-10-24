@@ -1,7 +1,7 @@
 ﻿using TwitchChatter;
 using UnityEngine;
 
-[RequireComponent( typeof( SpriteRenderer ) )]
+[ RequireComponent( typeof( SpriteRenderer ) ) ]
 public class Emote : MonoBehaviour
 {
 	public User owner;
@@ -16,6 +16,7 @@ public class Emote : MonoBehaviour
 			Instantiate( boardManager.emotePrefab );
 		emoteGameObject.transform.parent = boardManager.emoteParent;
 		Emote emote = emoteGameObject.GetComponent<Emote>();
+		GameManager.singleton.boardManager.boardReset.AddListener( emote.OnBoardReset );
 		emote.owner = owner;
 		emote.SetEmote( id );
 		return emoteGameObject;
@@ -24,6 +25,14 @@ public class Emote : MonoBehaviour
 	void Awake()
 	{
 		m_SpriteRenderer = GetComponent<SpriteRenderer>();
+	}
+
+	void OnDestroy()
+	{
+		if( GameManager.singleton.boardManager != null )
+		{
+			GameManager.singleton.boardManager.boardReset.RemoveListener( OnBoardReset );
+		}
 	}
 
 	void SetEmote( int emoteID )
@@ -39,5 +48,10 @@ public class Emote : MonoBehaviour
 		{
 			m_SpriteRenderer.sprite = sprite;
 		}
+	}
+
+	void OnBoardReset()
+	{
+		Destroy( gameObject );
 	}
 }

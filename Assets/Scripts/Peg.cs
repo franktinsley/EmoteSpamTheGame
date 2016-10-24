@@ -1,32 +1,17 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Peg : MonoBehaviour
 {
-	static int count;
-
-	[SerializeField] bool m_Invincible;
-	[SerializeField] int m_Health = 1;
+	[ SerializeField ] bool m_Invincible;
+	[ SerializeField ] int m_Health = 1;
 
 	BoardManager m_BoardManager;
 
-	public void Freeze()
-	{
-		var _rigidbody2D = GetComponent<Rigidbody2D>();
-		if( _rigidbody2D != null )
-		{
-			Destroy( _rigidbody2D );
-		}
-		gameObject.isStatic = true;
-		m_BoardManager.freezeBoard.RemoveListener( Freeze );
-		m_Invincible = false;
-	}
-
 	void Start()
 	{
-		count++;
 		m_BoardManager = GameManager.singleton.boardManager;
-		m_BoardManager.freezeBoard.AddListener( Freeze );
+		m_BoardManager.boardFrozen.AddListener( OnBoardFrozen );
+		m_BoardManager.pegPopped.AddListener( OnPegPopped );
 	}
 
 	void OnCollisionEnter2D( Collision2D collision )
@@ -41,13 +26,34 @@ public class Peg : MonoBehaviour
 				{
 					emote.owner.ScorePop();
 				}
-				count--;
-				if( count < 1 )
-				{
-					SceneManager.LoadScene( SceneManager.GetActiveScene().buildIndex );
-				}
+				m_BoardManager.FirePegPopped();
 				Destroy( gameObject );
 			}
 		}
+	}
+
+	void OnDestroy()
+	{
+		if( m_BoardManager != null )
+		{
+			m_BoardManager.boardFrozen.RemoveListener( OnBoardFrozen );
+			m_BoardManager.pegPopped.RemoveListener( OnPegPopped );
+		}
+	}
+
+	void OnBoardFrozen()
+	{
+		var _rigidbody2D = GetComponent<Rigidbody2D>();
+		if( _rigidbody2D != null )
+		{
+			Destroy( _rigidbody2D );
+		}
+		gameObject.isStatic = true;
+		m_Invincible = false;
+	}
+
+	void OnPegPopped( int remainingCount )
+	{
+		// update appearance and stuff based on new remaining count of pegs
 	}
 }

@@ -4,11 +4,14 @@ using UnityEngine.Events;
 
 public class BoardManager : MonoBehaviour
 {
+	public const int startingNumberOfPegs = 100;
+
 	const float m_SecondsBetweenShots = 0.05f;
 	const float m_SecondsToLetPegsBounce = 2f;
-	const int m_StartingNumberOfPegs = 100;
 
-	[HideInInspector] public UnityEvent freezeBoard;
+	[ HideInInspector ] public UnityEvent boardFrozen;
+	[ HideInInspector ] public IntEvent pegPopped;
+	[ HideInInspector ] public UnityEvent boardReset;
 
 	public Turret turret;
 	public Animator barrelMotor;
@@ -18,18 +21,44 @@ public class BoardManager : MonoBehaviour
 	public Transform pegParent;
 	public Transform emoteParent;
 
-	public void CreateBoard()
+	int m_remainingNumberOfPegs;
+
+	void Start ()
 	{
-		StartCoroutine( ShootCoroutine() );
+		if( pegPopped == null )
+		{
+			pegPopped = new IntEvent();
+		}
 	}
 
-	IEnumerator ShootCoroutine()
+	public void CreateBoard()
+	{
+		boardReset.Invoke();
+		StartCoroutine( CreateBoardCoroutine() );
+		m_remainingNumberOfPegs = startingNumberOfPegs;
+	}
+
+	public void FirePegPopped()
+	{
+		m_remainingNumberOfPegs--;
+		if( m_remainingNumberOfPegs < 1 )
+		{
+			CreateBoard();
+		}
+		else
+		{
+			pegPopped.Invoke( m_remainingNumberOfPegs );
+		}
+	}
+
+	IEnumerator CreateBoardCoroutine()
 	{
 		GameManager.singleton.allowMessages = false;
 		barrelMotor.speed = 5f;
+		pegWalls.SetActive( true );
 		turret.transform.Translate( Vector3.down * 4f );
 		yield return new WaitForSeconds( m_SecondsBetweenShots );
-		for( int i = 0; i < m_StartingNumberOfPegs; i++ )
+		for( int i = 0; i < startingNumberOfPegs; i++ )
 		{
 			GameObject pegGameObject = Instantiate( pegPrefab );
 			pegGameObject.transform.parent = pegParent;
@@ -37,7 +66,7 @@ public class BoardManager : MonoBehaviour
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}
 		yield return new WaitForSeconds( m_SecondsToLetPegsBounce );
-		freezeBoard.Invoke();
+		boardFrozen.Invoke();
 		turret.transform.Translate( Vector3.up * 4f );
 		pegWalls.SetActive( false );
 		barrelMotor.speed = 1f;

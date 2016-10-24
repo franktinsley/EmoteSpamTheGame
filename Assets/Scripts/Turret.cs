@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-	[SerializeField] float m_ShootForceMultiplier = 10f;
-	[SerializeField] float m_ProjectileZPosition = 2f;
-	[SerializeField] List<SpriteRenderer> m_SpriteRenderers;
-	[SerializeField] Transform m_Barrel;
+	[ SerializeField ] float m_ShootForceMultiplier = 10f;
+	[ SerializeField ] float m_ProjectileZPosition = 2f;
+	[ SerializeField ] List<SpriteRenderer> m_SpriteRenderers;
+	[ SerializeField ] Transform m_Barrel;
 
 	public void Shoot( GameObject projectile )
 	{

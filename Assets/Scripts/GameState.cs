@@ -1,4 +1,4 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu]
+[ CreateAssetMenu ]
 public class GameState : ScriptableObject {}
