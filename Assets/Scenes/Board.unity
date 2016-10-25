@@ -105,7 +105,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!114 &98688514
 MonoBehaviour:
@@ -180,12 +180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowMessages: 0
-  m_CurrentGameState: {fileID: 11400000, guid: 6b1ca7a220ace4d15a055090b60b8f7f, type: 2}
-  m_PossibleGameStates:
-  - {fileID: 11400000, guid: 6b1ca7a220ace4d15a055090b60b8f7f, type: 2}
-  - {fileID: 11400000, guid: 1808df7ebd86849bc85c7c2f2234b56a, type: 2}
-  - {fileID: 11400000, guid: 86bab81e5907b42cc8e25392fd14c9e2, type: 2}
-  - {fileID: 11400000, guid: f5cfec242915c4c6ca680ad372c54294, type: 2}
   m_UserManager: {fileID: 1818704928}
   m_BoardManager: {fileID: 1434638119}
 --- !u!4 &262150157
@@ -347,7 +341,7 @@ GameObject:
   - 4: {fileID: 606167366}
   - 95: {fileID: 606167367}
   m_Layer: 0
-  m_Name: Barrel Motor
+  m_Name: Motor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1003,7 +997,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebad20b950c5483b96c3652c9d0ab3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freezeBoard:
+  boardFrozen:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  pegPopped:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  boardReset:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,

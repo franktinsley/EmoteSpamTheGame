@@ -3,13 +3,15 @@ using UnityEngine;
 
 public static class JsonScriptableObject
 {
-	public static T LoadFromFile<T>( string path ) where T : ScriptableObject
+	public static T LoadFromFile<T>( string path, out bool fileFound ) where T : ScriptableObject
 	{
 		T instance = ScriptableObject.CreateInstance<T>();
+		fileFound = false;
 		if( File.Exists( path ) )
 		{
 			string json = File.ReadAllText( path );
 			JsonUtility.FromJsonOverwrite( json, instance );
+			fileFound = true;
 		}
 		return instance;
 	}

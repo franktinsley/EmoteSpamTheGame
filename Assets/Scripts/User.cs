@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class User : MonoBehaviour
 {
+	public UserData userData;
+
 	const float m_SecondsBetweenShots = 0.2f;
 	const int m_popScore = 10;
-
-	public UserData userData;
 
 	string m_UserDataFilePath;
 	Turret m_Cannon;
@@ -28,16 +28,20 @@ public class User : MonoBehaviour
 		}
 	}
 
-	public static User Initialize( string userName, string userDataFilePath, Transform parent )
+	public static User CreateInstance( string userName, string userDataFilePath, Transform parent )
 	{
+		User user;
+		UserData userData;
+		bool fileFound;
+		userData = JsonScriptableObject.LoadFromFile<UserData>( userDataFilePath, out fileFound );
+		if( !fileFound )
+		{
+			userData.userName = userName;
+		}
 		var userGameObject = new GameObject( userName );
 		userGameObject.transform.parent = parent;
-		var user = userGameObject.AddComponent<User>();
-		user.userData = JsonScriptableObject.LoadFromFile<UserData>( userDataFilePath );
-		if( user.userData.userName == null )
-		{
-			user.userData.userName = userName;
-		}
+		user = userGameObject.AddComponent<User>();
+		user.userData = userData;
 		user.m_UserDataFilePath = userDataFilePath;
 		user.m_Cannon = GameManager.singleton.boardManager.turret;
 		GameManager.singleton.boardManager.boardReset.AddListener( user.OnBoardReset );
