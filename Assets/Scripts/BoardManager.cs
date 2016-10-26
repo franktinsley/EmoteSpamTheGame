@@ -11,21 +11,24 @@ public class BoardManager : MonoBehaviour
 
 	[ HideInInspector ] public UnityEvent boardFrozen;
 	[ HideInInspector ] public UnityEvent boardReset;
-	[ HideInInspector ] public IntEvent pegPopped;
 
 	public Turret turret;
 	public Animator barrelMotor;
+	public Animator boardAnimator;
+	public float rainbowCycleHue;
+	public float rainbowCycleSpeedMin;
+	public float rainbowCycleSpeedMax;
 	public GameObject emotePrefab;
 	public GameObject pegPrefab;
 	public GameObject pegWalls;
 	public Transform pegParent;
 	public Transform emoteParent;
 
-	int m_remainingNumberOfPegs;
+	int m_NumberOfPegsPopped;
 
 	void Start()
 	{
-		pegPopped = new IntEvent();
+		SetRainbowCycleSpeed();
 	}
 
 	public void CreateBoard()
@@ -34,17 +37,24 @@ public class BoardManager : MonoBehaviour
 		StartCoroutine( CreateBoardCoroutine() );
 	}
 
-	public void FirePegPopped()
+	public void PegPopped( Peg pegPopped )
 	{
-		m_remainingNumberOfPegs--;
-		if( m_remainingNumberOfPegs < 1 )
+		m_NumberOfPegsPopped++;
+		if( m_NumberOfPegsPopped == startingNumberOfPegs )
 		{
 			CreateBoard();
+			m_NumberOfPegsPopped = 0;
 		}
-		else
-		{
-			pegPopped.Invoke( m_remainingNumberOfPegs );
-		}
+		SetRainbowCycleSpeed();
+	}
+
+	void SetRainbowCycleSpeed()
+	{
+		float pegProgress =
+			Mathf.InverseLerp( 0f, ( float )startingNumberOfPegs, ( float )m_NumberOfPegsPopped );
+		float rainbowCycleAnimatorSpeed =
+			Mathf.Lerp( rainbowCycleSpeedMin, rainbowCycleSpeedMax, pegProgress );
+		boardAnimator.speed = rainbowCycleAnimatorSpeed;
 	}
 
 	IEnumerator CreateBoardCoroutine()
@@ -60,7 +70,6 @@ public class BoardManager : MonoBehaviour
 			GameObject pegGameObject = Instantiate( pegPrefab );
 			pegGameObject.transform.parent = pegParent;
 			turret.Shoot( pegGameObject );
-			m_remainingNumberOfPegs++;
 			yield return waitForSecondsBetweenShots;
 		}
 		yield return new WaitForSeconds( m_SecondsToLetPegsBounce );

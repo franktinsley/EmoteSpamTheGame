@@ -6,13 +6,11 @@ public static class JsonScriptableObject
 	public static T LoadFromFile<T>( string path, out bool fileFound ) where T : ScriptableObject
 	{
 		T instance = ScriptableObject.CreateInstance<T>();
-		fileFound = false;
-		Debug.Log( path );
-		if( File.Exists( path ) )
+		fileFound = File.Exists( path );
+		if( fileFound )
 		{
 			string json = File.ReadAllText( path );
 			JsonUtility.FromJsonOverwrite( json, instance );
-			fileFound = true;
 		}
 		return instance;
 	}

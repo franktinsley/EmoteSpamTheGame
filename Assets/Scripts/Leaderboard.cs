@@ -2,18 +2,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[ RequireComponent( typeof( Text ) ) ]
 public class Leaderboard : MonoBehaviour
 {
 	public string leadingText = "Leaderboard:\n";
 	public int count = 50;
 
-	Text m_Text;
+	[ SerializeField ] Text m_Text;
+
 	List<UserData> m_PlayerScores;
 
 	void Awake()
 	{
-		m_Text = GetComponent<Text>();
 		m_PlayerScores = new List<UserData>();
 	}
 

@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 
 	static GameManager m_Singleton;
 
-	public BoardManager boardManager;
 	public UserManager userManager;
+	public BoardManager boardManager;
 	public Leaderboard leaderboard;
 	public bool allowMessages;
 

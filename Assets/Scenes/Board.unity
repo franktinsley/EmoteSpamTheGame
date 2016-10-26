@@ -101,7 +101,7 @@ GameObject:
   - 114: {fileID: 98688515}
   - 114: {fileID: 98688514}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: Event System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,6 +163,8 @@ GameObject:
   - 114: {fileID: 262150156}
   - 114: {fileID: 262150161}
   - 114: {fileID: 262150160}
+  - 95: {fileID: 262150162}
+  - 114: {fileID: 262150163}
   - 114: {fileID: 262150159}
   - 114: {fileID: 262150158}
   m_Layer: 0
@@ -183,9 +185,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33d11473d7ed9428c9e38ad9cf1e638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardManager: {fileID: 262150160}
   userManager: {fileID: 262150161}
-  leaderboard: {fileID: 784446357}
+  boardManager: {fileID: 262150160}
+  leaderboard: {fileID: 262150163}
   allowMessages: 0
 --- !u!4 &262150157
 Transform:
@@ -250,12 +252,12 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  pegPopped:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: IntEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   turret: {fileID: 1625687869}
   barrelMotor: {fileID: 606167367}
+  boardAnimator: {fileID: 262150162}
+  rainbowCycleHue: 0
+  rainbowCycleSpeedMin: 0.1
+  rainbowCycleSpeedMax: 8
   emotePrefab: {fileID: 1000013607543106, guid: 09b53ff9bc793457fb6749deee31b06e,
     type: 2}
   pegPrefab: {fileID: 1000013640237658, guid: 4658b3f4d97e940be87ad3cb9eac314c, type: 2}
@@ -274,6 +276,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usersParent: {fileID: 1857462769}
+--- !u!95 &262150162
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 262150155}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 30c437f2168624f50bfd28cf393feaa0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &262150163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 262150155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31190f6d073bc4d53973bcf25f0b0b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leadingText: 'Leaderboard:
+
+'
+  count: 50
+  m_Text: {fileID: 784446358}
 --- !u!1 &512290269
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,7 +770,6 @@ GameObject:
   - 224: {fileID: 784446356}
   - 222: {fileID: 784446359}
   - 114: {fileID: 784446358}
-  - 114: {fileID: 784446357}
   - 114: {fileID: 784446360}
   m_Layer: 5
   m_Name: Leaderboard
@@ -762,21 +796,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1280, y: 720}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &784446357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 784446355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31190f6d073bc4d53973bcf25f0b0b4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leadingText: 'Leaderboard:
-
-'
-  count: 50
 --- !u!114 &784446358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1226,7 +1245,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
