@@ -7,6 +7,7 @@ public static class JsonScriptableObject
 	{
 		T instance = ScriptableObject.CreateInstance<T>();
 		fileFound = false;
+		Debug.Log( path );
 		if( File.Exists( path ) )
 		{
 			string json = File.ReadAllText( path );

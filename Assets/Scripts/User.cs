@@ -11,7 +11,7 @@ public class User : MonoBehaviour
 	const int m_popScore = 10;
 
 	string m_UserDataFilePath;
-	Turret m_Cannon;
+	Turret m_Turret;
 	Queue<GameObject> m_Shots = new Queue<GameObject>();
 	bool m_Shooting;
 
@@ -43,9 +43,9 @@ public class User : MonoBehaviour
 		user = userGameObject.AddComponent<User>();
 		user.userData = userData;
 		user.m_UserDataFilePath = userDataFilePath;
-		user.m_Cannon = GameManager.singleton.boardManager.turret;
+		user.m_Turret = GameManager.singleton.boardManager.turret;
 		GameManager.singleton.boardManager.boardReset.AddListener( user.OnBoardReset );
-		Leaderboard.singleton.UpdateScore( user.userData );
+		GameManager.singleton.leaderboard.UpdateScore( user.userData );
 		return user;
 	}
 
@@ -62,7 +62,7 @@ public class User : MonoBehaviour
 	public void ScorePop()
 	{
 		userData.score += m_popScore;
-		Leaderboard.singleton.UpdateScore( userData );
+		GameManager.singleton.leaderboard.UpdateScore( userData );
 	}
 
 	void UpdateUserData( TwitchChatMessage message )
@@ -97,11 +97,11 @@ public class User : MonoBehaviour
 		while( m_Shots.Count > 0 )
 		{
 			m_Shooting = true;
-			m_Cannon.Shoot( m_Shots.Dequeue() );
+			m_Turret.Shoot( m_Shots.Dequeue() );
 			if( userData.score > 0 )
 			{
 				userData.score--;
-				Leaderboard.singleton.UpdateScore( userData );
+				GameManager.singleton.leaderboard.UpdateScore( userData );
 			}
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}

@@ -10,8 +10,6 @@ public class Turret : MonoBehaviour
 
 	public void Shoot( GameObject projectile )
 	{
-		// TODO: Make the projectile game objects that want to color the
-		// turret color it instead of the turret doing it
 		var emote = projectile.GetComponentInChildren<Emote>();
 		if( emote != null )
 		{

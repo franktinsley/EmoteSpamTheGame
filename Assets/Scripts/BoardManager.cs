@@ -10,8 +10,8 @@ public class BoardManager : MonoBehaviour
 	const float m_SecondsToLetPegsBounce = 2f;
 
 	[ HideInInspector ] public UnityEvent boardFrozen;
-	[ HideInInspector ] public IntEvent pegPopped;
 	[ HideInInspector ] public UnityEvent boardReset;
+	[ HideInInspector ] public IntEvent pegPopped;
 
 	public Turret turret;
 	public Animator barrelMotor;
@@ -23,19 +23,15 @@ public class BoardManager : MonoBehaviour
 
 	int m_remainingNumberOfPegs;
 
-	void Start ()
+	void Start()
 	{
-		if( pegPopped == null )
-		{
-			pegPopped = new IntEvent();
-		}
+		pegPopped = new IntEvent();
 	}
 
 	public void CreateBoard()
 	{
 		boardReset.Invoke();
 		StartCoroutine( CreateBoardCoroutine() );
-		m_remainingNumberOfPegs = startingNumberOfPegs;
 	}
 
 	public void FirePegPopped()
@@ -57,13 +53,15 @@ public class BoardManager : MonoBehaviour
 		barrelMotor.speed = 5f;
 		pegWalls.SetActive( true );
 		turret.transform.Translate( Vector3.down * 4f );
-		yield return new WaitForSeconds( m_SecondsBetweenShots );
+		var waitForSecondsBetweenShots = new WaitForSeconds( m_SecondsBetweenShots );
+		yield return waitForSecondsBetweenShots;
 		for( int i = 0; i < startingNumberOfPegs; i++ )
 		{
 			GameObject pegGameObject = Instantiate( pegPrefab );
 			pegGameObject.transform.parent = pegParent;
 			turret.Shoot( pegGameObject );
-			yield return new WaitForSeconds( m_SecondsBetweenShots );
+			m_remainingNumberOfPegs++;
+			yield return waitForSecondsBetweenShots;
 		}
 		yield return new WaitForSeconds( m_SecondsToLetPegsBounce );
 		boardFrozen.Invoke();

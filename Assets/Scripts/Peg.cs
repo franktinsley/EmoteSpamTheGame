@@ -54,6 +54,6 @@ public class Peg : MonoBehaviour
 
 	void OnPegPopped( int remainingCount )
 	{
-		// update appearance and stuff based on new remaining count of pegs
+		//int startingNumberOfPegs = BoardManager.startingNumberOfPegs;
 	}
 }

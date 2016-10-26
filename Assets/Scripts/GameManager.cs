@@ -5,18 +5,23 @@ public class GameManager : MonoBehaviour
 {
 	public static GameManager singleton { get { return m_Singleton; } }
 
-	public BoardManager boardManager { get { return m_BoardManager; } }
-	public UserManager userManager { get { return m_UserManager; } }
-	public bool allowMessages;
-
-	[SerializeField] UserManager m_UserManager;
-	[SerializeField] BoardManager m_BoardManager;
-
 	static GameManager m_Singleton;
+
+	public BoardManager boardManager;
+	public UserManager userManager;
+	public Leaderboard leaderboard;
+	public bool allowMessages;
 
 	void Awake()
 	{
-		m_Singleton = this;
+		if( m_Singleton == null )
+		{
+			m_Singleton = this;
+		}
+		else
+		{
+			Destroy( gameObject );
+		}
 	}
 
 	void Start()
@@ -56,12 +61,12 @@ public class GameManager : MonoBehaviour
 	{
 		if( allowMessages )
 		{
-			m_UserManager.HandleChatMessage( message );
+			userManager.HandleChatMessage( message );
 		}
 	}
 
 	void StartGame()
 	{
-		m_BoardManager.CreateBoard();
+		boardManager.CreateBoard();
 	}
 }
