@@ -12,11 +12,12 @@ public class Emote : MonoBehaviour
 	public static GameObject InstantiateEmoteGameObject( int id, User owner )
 	{
 		BoardManager boardManager = GameManager.singleton.boardManager;
-		GameObject emoteGameObject =
-			Instantiate( boardManager.emotePrefab );
-		emoteGameObject.transform.parent = boardManager.emoteParent;
-		Emote emote = emoteGameObject.GetComponent<Emote>();
-		GameManager.singleton.boardManager.boardReset.AddListener( emote.OnBoardReset );
+		var emoteGameObject = Instantiate(
+			boardManager.emotePrefab,
+			boardManager.emoteParent ) as GameObject;
+		var emote = emoteGameObject.GetComponent<Emote>();
+		GameManager.singleton.boardManager.boardReset.AddListener(
+			emote.OnBoardReset );
 		emote.owner = owner;
 		emote.SetEmote( id );
 		return emoteGameObject;
@@ -31,7 +32,8 @@ public class Emote : MonoBehaviour
 	{
 		if( GameManager.singleton.boardManager != null )
 		{
-			GameManager.singleton.boardManager.boardReset.RemoveListener( OnBoardReset );
+			GameManager.singleton.boardManager.boardReset.RemoveListener(
+				OnBoardReset );
 		}
 	}
 

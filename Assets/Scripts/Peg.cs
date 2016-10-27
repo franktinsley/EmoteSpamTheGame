@@ -31,10 +31,10 @@ public class Peg : MonoBehaviour
 				var emote = collision.gameObject.GetComponent<Emote>();
 				if( emote != null )
 				{
-					emote.owner.ScorePop();
+					var owner = emote.owner;
+					m_BoardManager.PegPopped( this, owner );
+					Destroy( gameObject );
 				}
-				m_BoardManager.PegPopped( this );
-				Destroy( gameObject );
 			}
 		}
 	}

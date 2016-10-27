@@ -15,11 +15,15 @@ public class BoardManager : MonoBehaviour
 	public Turret turret;
 	public Animator barrelMotor;
 	public Animator boardAnimator;
+	public int shotCost;
+	public int pegPopScoreMin;
+	public int pegPopScoreMax;
 	public float rainbowCycleHue;
 	public float rainbowCycleSpeedMin;
 	public float rainbowCycleSpeedMax;
 	public GameObject emotePrefab;
 	public GameObject pegPrefab;
+	public GameObject pointsLabelPrefab;
 	public GameObject pegWalls;
 	public Transform pegParent;
 	public Transform emoteParent;
@@ -37,7 +41,7 @@ public class BoardManager : MonoBehaviour
 		StartCoroutine( CreateBoardCoroutine() );
 	}
 
-	public void PegPopped( Peg pegPopped )
+	public void PegPopped( Peg pegPopped, User user )
 	{
 		m_NumberOfPegsPopped++;
 		if( m_NumberOfPegsPopped == startingNumberOfPegs )
@@ -46,14 +50,28 @@ public class BoardManager : MonoBehaviour
 			m_NumberOfPegsPopped = 0;
 		}
 		SetRainbowCycleSpeed();
+		int points = PegPopScore();
+		user.ScorePoints( points );
+		PointsLabel.InstantiatePointsLabelGameObject(
+			points.ToString(), pegPopped.transform.position );
+	}
+
+	int PegPopScore()
+	{
+		return ( int )Mathf.Lerp(
+			( int )pegPopScoreMin, ( int )pegPopScoreMax, PegProgress() );
+	}
+
+	float PegProgress()
+	{
+		return Mathf.InverseLerp(
+			0f, ( float )startingNumberOfPegs, ( float )m_NumberOfPegsPopped );
 	}
 
 	void SetRainbowCycleSpeed()
 	{
-		float pegProgress =
-			Mathf.InverseLerp( 0f, ( float )startingNumberOfPegs, ( float )m_NumberOfPegsPopped );
 		float rainbowCycleAnimatorSpeed =
-			Mathf.Lerp( rainbowCycleSpeedMin, rainbowCycleSpeedMax, pegProgress );
+			Mathf.Lerp( rainbowCycleSpeedMin, rainbowCycleSpeedMax, PegProgress() );
 		boardAnimator.speed = rainbowCycleAnimatorSpeed;
 	}
 

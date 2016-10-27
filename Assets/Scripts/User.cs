@@ -8,7 +8,6 @@ public class User : MonoBehaviour
 	public UserData userData;
 
 	const float m_SecondsBetweenShots = 0.2f;
-	const int m_popScore = 10;
 
 	string m_UserDataFilePath;
 	Turret m_Turret;
@@ -59,9 +58,9 @@ public class User : MonoBehaviour
 		}
 	}
 
-	public void ScorePop()
+	public void ScorePoints( int points )
 	{
-		userData.score += m_popScore;
+		userData.score += points;
 		GameManager.singleton.leaderboard.UpdateScore( userData );
 	}
 
@@ -100,8 +99,13 @@ public class User : MonoBehaviour
 			m_Turret.Shoot( m_Shots.Dequeue() );
 			if( userData.score > 0 )
 			{
-				userData.score--;
-				GameManager.singleton.leaderboard.UpdateScore( userData );
+				GameManager gameManager = GameManager.singleton;
+				userData.score -= gameManager.boardManager.shotCost;
+				if( userData.score < 1 )
+				{
+					userData.score = 0;
+				}
+				gameManager.leaderboard.UpdateScore( userData );
 			}
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}

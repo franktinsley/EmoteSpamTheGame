@@ -255,12 +255,17 @@ MonoBehaviour:
   turret: {fileID: 1625687869}
   barrelMotor: {fileID: 606167367}
   boardAnimator: {fileID: 262150162}
+  shotCost: 100
+  pegPopScoreMin: 1
+  pegPopScoreMax: 500
   rainbowCycleHue: 0
   rainbowCycleSpeedMin: 0.1
   rainbowCycleSpeedMax: 8
   emotePrefab: {fileID: 1000013607543106, guid: 09b53ff9bc793457fb6749deee31b06e,
     type: 2}
   pegPrefab: {fileID: 1000013640237658, guid: 4658b3f4d97e940be87ad3cb9eac314c, type: 2}
+  pointsLabelPrefab: {fileID: 1000010793769950, guid: 9ba7e9714ad494aec9bbb0d6a61a225e,
+    type: 2}
   pegWalls: {fileID: 1054681216}
   pegParent: {fileID: 666608124}
   emoteParent: {fileID: 541506173}
@@ -679,7 +684,7 @@ GameObject:
   - 114: {fileID: 770780872}
   - 114: {fileID: 770780871}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Overlay Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
