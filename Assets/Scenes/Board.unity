@@ -259,11 +259,13 @@ MonoBehaviour:
   pegPopScoreMin: 1
   pegPopScoreMax: 500
   rainbowCycleHue: 0
-  rainbowCycleSpeedMin: 0.1
-  rainbowCycleSpeedMax: 8
+  rainbowCycleSpeedMin: 0.05
+  rainbowCycleSpeedMax: 2
   emotePrefab: {fileID: 1000013607543106, guid: 09b53ff9bc793457fb6749deee31b06e,
     type: 2}
   pegPrefab: {fileID: 1000013640237658, guid: 4658b3f4d97e940be87ad3cb9eac314c, type: 2}
+  bumperPrefab: {fileID: 1000010556111194, guid: 3e8704bd896b943b1b9f0e35bd2fed26,
+    type: 2}
   pointsLabelPrefab: {fileID: 1000010793769950, guid: 9ba7e9714ad494aec9bbb0d6a61a225e,
     type: 2}
   pegWalls: {fileID: 1054681216}

@@ -5,8 +5,10 @@ using UnityEngine.Events;
 public class BoardManager : MonoBehaviour
 {
 	public const int startingNumberOfPegs = 100;
+	public const int startingNumberOfBumpers = 3;
 
 	const float m_SecondsBetweenShots = 0.05f;
+	const float m_SecondsBetweenBumperShots = 4f;
 	const float m_SecondsToLetPegsBounce = 2f;
 
 	[ HideInInspector ] public UnityEvent boardFrozen;
@@ -23,6 +25,7 @@ public class BoardManager : MonoBehaviour
 	public float rainbowCycleSpeedMax;
 	public GameObject emotePrefab;
 	public GameObject pegPrefab;
+	public GameObject bumperPrefab;
 	public GameObject pointsLabelPrefab;
 	public GameObject pegWalls;
 	public Transform pegParent;
@@ -83,6 +86,13 @@ public class BoardManager : MonoBehaviour
 		turret.transform.Translate( Vector3.down * 4f );
 		var waitForSecondsBetweenShots = new WaitForSeconds( m_SecondsBetweenShots );
 		yield return waitForSecondsBetweenShots;
+		for( int i = 0; i < startingNumberOfBumpers; i++ )
+		{
+			GameObject bumperGameObject = Instantiate( bumperPrefab );
+			bumperGameObject.transform.parent = pegParent;
+			turret.Shoot( bumperGameObject );
+			yield return new WaitForSeconds( m_SecondsBetweenBumperShots );
+		}
 		for( int i = 0; i < startingNumberOfPegs; i++ )
 		{
 			GameObject pegGameObject = Instantiate( pegPrefab );
