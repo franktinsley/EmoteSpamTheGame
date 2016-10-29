@@ -255,12 +255,12 @@ MonoBehaviour:
   turret: {fileID: 1625687869}
   barrelMotor: {fileID: 606167367}
   boardAnimator: {fileID: 262150162}
-  shotCost: 100
+  shotCost: 1
   pegPopScoreMin: 1
   pegPopScoreMax: 500
   bumperPopScore: 5000
-  triggerScore: 500
-  bucketScore: 1000
+  triggerScore: 10
+  bucketScore: 1
   rainbowCycleHue: 0
   rainbowCycleSpeedMin: 0.05
   rainbowCycleSpeedMax: 2

@@ -97,16 +97,16 @@ public class User : MonoBehaviour
 		{
 			m_Shooting = true;
 			m_Turret.Shoot( m_Shots.Dequeue() );
-			if( userData.score > 0 )
-			{
+			//if( userData.score > 0 )
+			//{
 				GameManager gameManager = GameManager.singleton;
 				userData.score -= gameManager.boardManager.shotCost;
-				if( userData.score < 1 )
+				/*if( userData.score < 1 )
 				{
 					userData.score = 0;
-				}
+				}*/
 				gameManager.leaderboard.UpdateScore( userData );
-			}
+			//}
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}
 		m_Shooting = false;

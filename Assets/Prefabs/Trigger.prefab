@@ -145,7 +145,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 1000010353542916}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b5e63daf175ca4f01903db9f54469047, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 95000010825151720}
   offset: 0.1
-  spacer: {fileID: 0}
+  spacer: {fileID: 58000010317296388}
 --- !u!114 &114000012402065892
 MonoBehaviour:
   m_ObjectHideFlags: 1
