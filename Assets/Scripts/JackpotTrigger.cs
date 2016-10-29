@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Trigger : MonoBehaviour
+public class JackpotTrigger : MonoBehaviour
 {
 	const string activatedTriggerName = "Activated";
 
@@ -43,7 +43,8 @@ public class Trigger : MonoBehaviour
 					{
 						var user = emote.owner;
 						animator.SetTrigger( activatedTriggerName );
-						m_BoardManager.TriggerActivated( this, user );
+						m_BoardManager.JackpotTriggerActivated( this, user );
+						m_CollisionGameObjects.Clear();
 					}
 				}
 			}

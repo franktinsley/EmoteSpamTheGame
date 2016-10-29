@@ -4,7 +4,6 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
 	[ SerializeField ] float m_ShootForceMultiplier = 10f;
-	[ SerializeField ] float m_ProjectileZPosition = 2f;
 	[ SerializeField ] List<SpriteRenderer> m_SpriteRenderers;
 	[ SerializeField ] Transform m_Barrel;
 
@@ -21,7 +20,7 @@ public class Turret : MonoBehaviour
 		projectile.transform.position = new Vector3(
 			m_Barrel.position.x,
 			m_Barrel.position.y,
-			m_ProjectileZPosition );
+			projectile.transform.position.z );
 		projectile.transform.rotation = m_Barrel.rotation;
 		projectile.GetComponent<HiddenGameObject>().isHidden = false;
 		Rigidbody2D projectileRigidbody =

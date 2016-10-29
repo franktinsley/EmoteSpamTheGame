@@ -6,6 +6,7 @@ public class HiddenGameObject : MonoBehaviour
 	public float rotationZAngle;
 	public float gravityScale;
 	public RigidbodyConstraints2D constraints;
+	public CollisionDetectionMode2D collisionDetectionMode;
 
 	public bool isHidden
 	{
@@ -46,6 +47,7 @@ public class HiddenGameObject : MonoBehaviour
 					rigidbody2D = gameObject.AddComponent<Rigidbody2D>();
 					rigidbody2D.gravityScale = gravityScale;
 					rigidbody2D.constraints = constraints;
+					rigidbody2D.collisionDetectionMode = collisionDetectionMode;
 				}
 			}
 			m_IsHidden = value;

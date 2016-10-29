@@ -10,6 +10,8 @@ public class User : MonoBehaviour
 	const float m_SecondsBetweenShots = 0.2f;
 
 	string m_UserDataFilePath;
+	BoardManager m_BoardManager;
+	Leaderboard m_Leaderboard;
 	Turret m_Turret;
 	Queue<GameObject> m_Shots = new Queue<GameObject>();
 	bool m_Shooting;
@@ -21,9 +23,9 @@ public class User : MonoBehaviour
 
 	void OnDestroy()
 	{
-		if( GameManager.singleton.boardManager != null )
+		if( m_BoardManager != null )
 		{
-			GameManager.singleton.boardManager.boardReset.RemoveListener( OnBoardReset );
+			m_BoardManager.boardReset.RemoveListener( OnBoardReset );
 		}
 	}
 
@@ -42,9 +44,11 @@ public class User : MonoBehaviour
 		user = userGameObject.AddComponent<User>();
 		user.userData = userData;
 		user.m_UserDataFilePath = userDataFilePath;
+		user.m_BoardManager = GameManager.singleton.boardManager;
 		user.m_Turret = GameManager.singleton.boardManager.turret;
-		GameManager.singleton.boardManager.boardReset.AddListener( user.OnBoardReset );
-		GameManager.singleton.leaderboard.UpdateScore( user.userData );
+		user.m_BoardManager.boardReset.AddListener( user.OnBoardReset );
+		user.m_Leaderboard = GameManager.singleton.leaderboard;
+		user.m_Leaderboard.UpdateScore( user.userData );
 		return user;
 	}
 
@@ -61,7 +65,7 @@ public class User : MonoBehaviour
 	public void ScorePoints( int points )
 	{
 		userData.score += points;
-		GameManager.singleton.leaderboard.UpdateScore( userData );
+		m_Leaderboard.UpdateScore( userData );
 	}
 
 	void UpdateUserData( TwitchChatMessage message )
@@ -96,6 +100,7 @@ public class User : MonoBehaviour
 		while( m_Shots.Count > 0 )
 		{
 			m_Shooting = true;
+			m_BoardManager.jackpotScore += 10;
 			m_Turret.Shoot( m_Shots.Dequeue() );
 			//if( userData.score > 0 )
 			//{

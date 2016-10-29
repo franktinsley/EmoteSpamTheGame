@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
-	public const int startingNumberOfPegs = 100;
+	public const int startingNumberOfPegs = 200;
 	public const int startingNumberOfBumpers = 0;
 	public const int startingNumberOfTriggers = 3;
 
@@ -30,21 +31,40 @@ public class BoardManager : MonoBehaviour
 	public GameObject emotePrefab;
 	public GameObject pegPrefab;
 	public GameObject triggerPrefab;
+	public GameObject jackpotTriggerPrefab;
 	public GameObject bumperPrefab;
 	public GameObject pointsLabelPrefab;
 	public GameObject pegWalls;
 	public Transform pegParent;
 	public Transform emoteParent;
+	public Text jackpot;
 
+	public int jackpotScore
+	{
+		get
+		{
+			return m_JackpotScore;
+		}
+		set
+		{
+			m_JackpotScore = value;
+			jackpot.text = m_JackpotLeadingText + value;
+		}
+	}
+
+	int m_JackpotScore;
+	string m_JackpotLeadingText;
 	int m_NumberOfPegsPopped;
 
 	void Start()
 	{
 		SetRainbowCycleSpeed();
+		m_JackpotLeadingText = jackpot.text;
 	}
 
 	public void CreateBoard()
 	{
+		m_JackpotScore = 0;
 		boardReset.Invoke();
 		StartCoroutine( CreateBoardCoroutine() );
 	}
@@ -76,6 +96,14 @@ public class BoardManager : MonoBehaviour
 		user.ScorePoints( triggerScore );
 		PointsLabel.InstantiatePointsLabelGameObject(
 			triggerScore.ToString(), trigger.transform.position );
+	}
+
+	public void JackpotTriggerActivated( JackpotTrigger jackpotTrigger, User user )
+	{
+		user.ScorePoints( m_JackpotScore );
+		PointsLabel.InstantiatePointsLabelGameObject(
+			m_JackpotScore.ToString(), jackpotTrigger.transform.position );
+		CreateBoard();
 	}
 
 	public void BucketActivated( Bucket bucket, User user )
@@ -126,6 +154,10 @@ public class BoardManager : MonoBehaviour
 			turret.Shoot( triggerGameObject );
 			yield return new WaitForSeconds( m_SecondsBetweenBumperShots );
 		}
+		GameObject jackpotTriggerGameObject = Instantiate( jackpotTriggerPrefab );
+		jackpotTriggerGameObject.transform.parent = pegParent;
+		turret.Shoot( jackpotTriggerGameObject );
+		yield return new WaitForSeconds( m_SecondsBetweenBumperShots );
 		for( int i = 0; i < startingNumberOfPegs; i++ )
 		{
 			GameObject pegGameObject = Instantiate( pegPrefab );

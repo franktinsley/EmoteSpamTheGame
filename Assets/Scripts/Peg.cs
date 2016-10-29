@@ -17,6 +17,7 @@ public class Peg : MonoBehaviour
 		m_Collider = GetComponent<CircleCollider2D>();
 		m_BoardManager = GameManager.singleton.boardManager;
 		m_BoardManager.boardFrozen.AddListener( OnBoardFrozen );
+		m_BoardManager.boardReset.AddListener( OnBoardReset );
 
 		m_Collider.radius = m_StartingColliderRadius;
 	}
@@ -44,6 +45,7 @@ public class Peg : MonoBehaviour
 		if( m_BoardManager != null )
 		{
 			m_BoardManager.boardFrozen.RemoveListener( OnBoardFrozen );
+			m_BoardManager.boardReset.RemoveListener( OnBoardReset );
 		}
 	}
 
@@ -56,5 +58,10 @@ public class Peg : MonoBehaviour
 		}
 		m_Collider.radius = m_FrozenColliderRadius;
 		gameObject.isStatic = true;
+	}
+
+	void OnBoardReset()
+	{
+		Destroy( gameObject );
 	}
 }

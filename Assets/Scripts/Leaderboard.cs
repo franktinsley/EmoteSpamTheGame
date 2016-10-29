@@ -28,7 +28,9 @@ public class Leaderboard : MonoBehaviour
 		int limit = count > m_PlayerScores.Count ? m_PlayerScores.Count : count;
 		for( int i = 0; i < limit; i++ )
 		{
-			m_Text.text += ( i + 1 ) + " - " + m_PlayerScores[ i ] + "\n";
+			int position = i + 1;
+			string positionString = StringExtensions.AddOrdinal( position );
+			m_Text.text +=  positionString + " - " + m_PlayerScores[ i ] + "\n";
 		}
 	}
 }
