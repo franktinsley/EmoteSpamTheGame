@@ -5,17 +5,9 @@ using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour
 {
-	public const int startingNumberOfPegs = 200;
-	public const int startingNumberOfBumpers = 0;
-	public const int startingNumberOfTriggers = 3;
-
-	const float m_SecondsBetweenShots = 0.05f;
-	const float m_SecondsBetweenBumperShots = 1f;
-	const float m_SecondsToLetPegsBounce = 2f;
-
-	[ HideInInspector ] public UnityEvent boardFrozen;
-	[ HideInInspector ] public UnityEvent boardReset;
-
+	public int startingNumberOfPegs = 200;
+	public int startingNumberOfTriggers = 3;
+	public int startingNumberOfBumpers;
 	public Turret turret;
 	public Animator barrelMotor;
 	public Animator boardAnimator;
@@ -25,6 +17,7 @@ public class BoardManager : MonoBehaviour
 	public int bumperPopScore;
 	public int triggerScore;
 	public int bucketScore;
+	public int jackpotIncrement;
 	public float rainbowCycleHue;
 	public float rainbowCycleSpeedMin;
 	public float rainbowCycleSpeedMax;
@@ -38,6 +31,13 @@ public class BoardManager : MonoBehaviour
 	public Transform pegParent;
 	public Transform emoteParent;
 	public Text jackpot;
+
+	[ HideInInspector ] public UnityEvent boardFrozen;
+	[ HideInInspector ] public UnityEvent boardReset;
+
+	[ SerializeField ] float m_SecondsBetweenShots = 0.05f;
+	[ SerializeField ] float m_SecondsBetweenBumperShots = 1f;
+	[ SerializeField ] float m_SecondsToLetPegsBounce = 2f;
 
 	public int jackpotScore
 	{
@@ -56,15 +56,19 @@ public class BoardManager : MonoBehaviour
 	string m_JackpotLeadingText;
 	int m_NumberOfPegsPopped;
 
+	void Awake()
+	{
+		m_JackpotLeadingText = jackpot.text;
+	}
+
 	void Start()
 	{
 		SetRainbowCycleSpeed();
-		m_JackpotLeadingText = jackpot.text;
 	}
 
 	public void CreateBoard()
 	{
-		m_JackpotScore = 0;
+		jackpotScore = 0;
 		boardReset.Invoke();
 		StartCoroutine( CreateBoardCoroutine() );
 	}
@@ -100,9 +104,9 @@ public class BoardManager : MonoBehaviour
 
 	public void JackpotTriggerActivated( JackpotTrigger jackpotTrigger, User user )
 	{
-		user.ScorePoints( m_JackpotScore );
+		user.ScorePoints( jackpotScore );
 		PointsLabel.InstantiatePointsLabelGameObject(
-			m_JackpotScore.ToString(), jackpotTrigger.transform.position );
+			jackpotScore.ToString(), jackpotTrigger.transform.position );
 		CreateBoard();
 	}
 
@@ -111,6 +115,11 @@ public class BoardManager : MonoBehaviour
 		user.ScorePoints( bucketScore );
 		PointsLabel.InstantiatePointsLabelGameObject(
 			bucketScore.ToString(), bucket.transform.position );
+	}
+
+	public void IncreaseJackpot()
+	{
+		jackpotScore += jackpotIncrement;
 	}
 
 	int PegPopScore()
@@ -134,7 +143,6 @@ public class BoardManager : MonoBehaviour
 
 	IEnumerator CreateBoardCoroutine()
 	{
-		GameManager.singleton.allowMessages = false;
 		barrelMotor.speed = 10f;
 		pegWalls.SetActive( true );
 		turret.transform.Translate( Vector3.down * 4f );
@@ -166,11 +174,10 @@ public class BoardManager : MonoBehaviour
 			yield return waitForSecondsBetweenShots;
 		}
 		yield return new WaitForSeconds( m_SecondsToLetPegsBounce );
-		boardFrozen.Invoke();
 		turret.transform.Translate( Vector3.up * 4f );
 		pegWalls.SetActive( false );
 		barrelMotor.speed = 1f;
-		GameManager.singleton.allowMessages = true;
+		boardFrozen.Invoke();
 		yield return null;
 	}
 }

@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
 	public UserManager userManager;
 	public BoardManager boardManager;
 	public Leaderboard leaderboard;
-	public bool allowMessages;
 
 	void Awake()
 	{
@@ -59,10 +58,7 @@ public class GameManager : MonoBehaviour
 
 	void OnChatMessage( ref TwitchChatMessage message )
 	{
-		if( allowMessages )
-		{
-			userManager.HandleChatMessage( message );
-		}
+		userManager.HandleChatMessage( message );
 	}
 
 	void StartGame()

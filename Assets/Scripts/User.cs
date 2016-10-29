@@ -15,6 +15,7 @@ public class User : MonoBehaviour
 	Turret m_Turret;
 	Queue<GameObject> m_Shots = new Queue<GameObject>();
 	bool m_Shooting;
+	bool m_AllowShooting;
 
 	void OnDisable()
 	{
@@ -25,6 +26,7 @@ public class User : MonoBehaviour
 	{
 		if( m_BoardManager != null )
 		{
+			m_BoardManager.boardReset.RemoveListener( OnBoardFrozen );
 			m_BoardManager.boardReset.RemoveListener( OnBoardReset );
 		}
 	}
@@ -46,6 +48,7 @@ public class User : MonoBehaviour
 		user.m_UserDataFilePath = userDataFilePath;
 		user.m_BoardManager = GameManager.singleton.boardManager;
 		user.m_Turret = GameManager.singleton.boardManager.turret;
+		user.m_BoardManager.boardFrozen.AddListener( user.OnBoardFrozen );
 		user.m_BoardManager.boardReset.AddListener( user.OnBoardReset );
 		user.m_Leaderboard = GameManager.singleton.leaderboard;
 		user.m_Leaderboard.UpdateScore( user.userData );
@@ -58,6 +61,7 @@ public class User : MonoBehaviour
 
 		if( message.emoteData != null )
 		{
+			Debug.Log( "Shoot " + message.emoteData.Length + " emotes." );
 			ShootEmotes( message.emoteData );
 		}
 	}
@@ -80,9 +84,12 @@ public class User : MonoBehaviour
 	void ShootEmotes( TwitchChatMessage.EmoteData[] emoteData )
 	{
 		EnqueueEmoteShots( emoteData );
-		if( !m_Shooting )
+		if( m_AllowShooting )
 		{
-			StartCoroutine( ShootCoroutine() );
+			if( !m_Shooting )
+			{
+				StartCoroutine( ShootCoroutine() );
+			}
 		}
 	}
 
@@ -100,26 +107,29 @@ public class User : MonoBehaviour
 		while( m_Shots.Count > 0 )
 		{
 			m_Shooting = true;
-			m_BoardManager.jackpotScore += 10;
+			m_BoardManager.IncreaseJackpot();
 			m_Turret.Shoot( m_Shots.Dequeue() );
-			//if( userData.score > 0 )
-			//{
-				GameManager gameManager = GameManager.singleton;
-				userData.score -= gameManager.boardManager.shotCost;
-				/*if( userData.score < 1 )
-				{
-					userData.score = 0;
-				}*/
-				gameManager.leaderboard.UpdateScore( userData );
-			//}
+			GameManager gameManager = GameManager.singleton;
+			userData.score -= gameManager.boardManager.shotCost;
+			gameManager.leaderboard.UpdateScore( userData );
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}
 		m_Shooting = false;
 		yield return null;
 	}
 
+	void OnBoardFrozen()
+	{
+		m_AllowShooting = true;
+		if( m_Shots.Count > 0 )
+		{
+			StartCoroutine( ShootCoroutine() );
+		}
+	}
+
 	void OnBoardReset()
 	{
+		m_AllowShooting = false;
 		m_Shots = new Queue<GameObject>();
 	}
 }
