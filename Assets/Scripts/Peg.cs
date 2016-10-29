@@ -3,36 +3,36 @@
 [ RequireComponent( typeof( SpriteRenderer ) ) ]
 public class Peg : MonoBehaviour
 {
-	[ SerializeField ] bool m_Invincible;
-	[ SerializeField ] int m_Health = 1;
+	public int health = 1;
+	public bool invincible;
 
+	[ SerializeField ] float m_StartingColliderRadius;
+	[ SerializeField ] float m_FrozenColliderRadius;
+
+	CircleCollider2D m_Collider;
 	BoardManager m_BoardManager;
-	SpriteRenderer m_SpriteRenderer;
 
 	void Start()
 	{
-		m_SpriteRenderer = GetComponent<SpriteRenderer>();
+		m_Collider = GetComponent<CircleCollider2D>();
 		m_BoardManager = GameManager.singleton.boardManager;
 		m_BoardManager.boardFrozen.AddListener( OnBoardFrozen );
-	}
 
-	void Update()
-	{
-		m_SpriteRenderer.color = Color.HSVToRGB( m_BoardManager.rainbowCycleHue, 1f, 1f );
+		m_Collider.radius = m_StartingColliderRadius;
 	}
 
 	void OnCollisionEnter2D( Collision2D collision )
 	{
-		if( !m_Invincible )
+		if( !invincible )
 		{
-			m_Health--;
-			if( m_Health <= 0 )
+			health--;
+			if( health <= 0 )
 			{
 				var emote = collision.gameObject.GetComponent<Emote>();
 				if( emote != null )
 				{
-					var owner = emote.owner;
-					m_BoardManager.PegPopped( this, owner );
+					var user = emote.owner;
+					m_BoardManager.PegPopped( this, user );
 					Destroy( gameObject );
 				}
 			}
@@ -54,7 +54,7 @@ public class Peg : MonoBehaviour
 		{
 			Destroy( _rigidbody2D );
 		}
+		m_Collider.radius = m_FrozenColliderRadius;
 		gameObject.isStatic = true;
-		m_Invincible = false;
 	}
 }

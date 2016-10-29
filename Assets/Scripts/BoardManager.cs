@@ -5,10 +5,11 @@ using UnityEngine.Events;
 public class BoardManager : MonoBehaviour
 {
 	public const int startingNumberOfPegs = 100;
-	public const int startingNumberOfBumpers = 3;
+	public const int startingNumberOfBumpers = 0;
+	public const int startingNumberOfTriggers = 3;
 
 	const float m_SecondsBetweenShots = 0.05f;
-	const float m_SecondsBetweenBumperShots = 4f;
+	const float m_SecondsBetweenBumperShots = 1f;
 	const float m_SecondsToLetPegsBounce = 2f;
 
 	[ HideInInspector ] public UnityEvent boardFrozen;
@@ -20,11 +21,15 @@ public class BoardManager : MonoBehaviour
 	public int shotCost;
 	public int pegPopScoreMin;
 	public int pegPopScoreMax;
+	public int bumperPopScore;
+	public int triggerScore;
+	public int bucketScore;
 	public float rainbowCycleHue;
 	public float rainbowCycleSpeedMin;
 	public float rainbowCycleSpeedMax;
 	public GameObject emotePrefab;
 	public GameObject pegPrefab;
+	public GameObject triggerPrefab;
 	public GameObject bumperPrefab;
 	public GameObject pointsLabelPrefab;
 	public GameObject pegWalls;
@@ -59,6 +64,27 @@ public class BoardManager : MonoBehaviour
 			points.ToString(), pegPopped.transform.position );
 	}
 
+	public void BumperPopped( Bumper bumper, User user )
+	{
+		user.ScorePoints( bumperPopScore );
+		PointsLabel.InstantiatePointsLabelGameObject(
+			bumperPopScore.ToString(), bumper.transform.position );
+	}
+
+	public void TriggerActivated( Trigger trigger, User user )
+	{
+		user.ScorePoints( triggerScore );
+		PointsLabel.InstantiatePointsLabelGameObject(
+			triggerScore.ToString(), trigger.transform.position );
+	}
+
+	public void BucketActivated( Bucket bucket, User user )
+	{
+		user.ScorePoints( bucketScore );
+		PointsLabel.InstantiatePointsLabelGameObject(
+			bucketScore.ToString(), bucket.transform.position );
+	}
+
 	int PegPopScore()
 	{
 		return ( int )Mathf.Lerp(
@@ -81,7 +107,7 @@ public class BoardManager : MonoBehaviour
 	IEnumerator CreateBoardCoroutine()
 	{
 		GameManager.singleton.allowMessages = false;
-		barrelMotor.speed = 5f;
+		barrelMotor.speed = 10f;
 		pegWalls.SetActive( true );
 		turret.transform.Translate( Vector3.down * 4f );
 		var waitForSecondsBetweenShots = new WaitForSeconds( m_SecondsBetweenShots );
@@ -91,6 +117,13 @@ public class BoardManager : MonoBehaviour
 			GameObject bumperGameObject = Instantiate( bumperPrefab );
 			bumperGameObject.transform.parent = pegParent;
 			turret.Shoot( bumperGameObject );
+			yield return new WaitForSeconds( m_SecondsBetweenBumperShots );
+		}
+		for( int i = 0; i < startingNumberOfTriggers; i++ )
+		{
+			GameObject triggerGameObject = Instantiate( triggerPrefab );
+			triggerGameObject.transform.parent = pegParent;
+			turret.Shoot( triggerGameObject );
 			yield return new WaitForSeconds( m_SecondsBetweenBumperShots );
 		}
 		for( int i = 0; i < startingNumberOfPegs; i++ )

@@ -22,7 +22,7 @@ public class Emote : MonoBehaviour
 		emote.SetEmote( id );
 		return emoteGameObject;
 	}
-		
+
 	void Awake()
 	{
 		m_SpriteRenderer = GetComponent<SpriteRenderer>();

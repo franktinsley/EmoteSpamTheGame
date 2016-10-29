@@ -2,6 +2,11 @@
 
 public class HiddenGameObject : MonoBehaviour
 {
+	public bool setRotation;
+	public float rotationZAngle;
+	public float gravityScale;
+	public RigidbodyConstraints2D constraints;
+
 	public bool isHidden
 	{
 		get
@@ -30,14 +35,29 @@ public class HiddenGameObject : MonoBehaviour
 			}
 			else
 			{
+				if( setRotation )
+				{
+					Vector3 eulerAngles = transform.rotation.eulerAngles;
+					eulerAngles = new Vector3( eulerAngles.x, eulerAngles.y, rotationZAngle );
+					transform.rotation = Quaternion.Euler( eulerAngles );
+				}
 				if( rigidbody2D == null )
 				{
-					gameObject.AddComponent<Rigidbody2D>();
+					rigidbody2D = gameObject.AddComponent<Rigidbody2D>();
+					rigidbody2D.gravityScale = gravityScale;
+					rigidbody2D.constraints = constraints;
 				}
 			}
 			m_IsHidden = value;
 		}
 	}
 
+	[ SerializeField ] bool m_StartHidden;
+
 	bool m_IsHidden;
+
+	void Awake()
+	{
+		isHidden = m_StartHidden;
+	}
 }
