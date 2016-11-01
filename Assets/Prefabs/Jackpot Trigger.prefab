@@ -58,6 +58,7 @@ GameObject:
   - 251: {fileID: 251000010567052018}
   - 95: {fileID: 95000011507332216}
   - 114: {fileID: 114000013627694202}
+  - 114: {fileID: 114000012401975848}
   m_Layer: 0
   m_Name: Switch
   m_TagString: Untagged
@@ -248,7 +249,7 @@ Animator:
   m_GameObject: {fileID: 1000012244067388}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bcf38b48da56646cd996c3d4a65a33ad, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5f31eec022c2e49ca976e0d645502336, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -256,6 +257,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114000012401975848
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012244067388}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523f5cfdef44b4721bb7d528c3e76b62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Hue: 0
 --- !u!114 &114000013627694202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -285,6 +298,7 @@ MonoBehaviour:
   rotationZAngle: 180
   gravityScale: 0
   constraints: 4
+  collisionDetectionMode: 0
   m_StartHidden: 1
 --- !u!212 &212000011688250000
 SpriteRenderer:
@@ -316,7 +330,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.031999946, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!212 &212000013623164384
