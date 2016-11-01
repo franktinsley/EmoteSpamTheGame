@@ -20,7 +20,7 @@ public class Bucket : MonoBehaviour
 		{
 			var user = emote.owner;
 			animator.SetTrigger( activatedTriggerName );
-			m_BoardManager.BucketActivated( this, user );
+			m_BoardManager.BucketHit( user );
 		}
 	}
 }

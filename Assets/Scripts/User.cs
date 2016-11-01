@@ -6,6 +6,7 @@ using UnityEngine;
 public class User : MonoBehaviour
 {
 	public UserData userData;
+	public int points;
 
 	const float m_SecondsBetweenShots = 0.2f;
 
@@ -61,15 +62,8 @@ public class User : MonoBehaviour
 
 		if( message.emoteData != null )
 		{
-			Debug.Log( "Shoot " + message.emoteData.Length + " emotes." );
 			ShootEmotes( message.emoteData );
 		}
-	}
-
-	public void ScorePoints( int points )
-	{
-		userData.score += points;
-		m_Leaderboard.UpdateScore( userData );
 	}
 
 	void UpdateUserData( TwitchChatMessage message )
@@ -107,10 +101,9 @@ public class User : MonoBehaviour
 		while( m_Shots.Count > 0 )
 		{
 			m_Shooting = true;
-			m_BoardManager.IncreaseJackpot();
-			m_Turret.Shoot( m_Shots.Dequeue() );
+			GameObject shot = m_Shots.Dequeue();
+			m_Turret.Shoot( shot );
 			GameManager gameManager = GameManager.singleton;
-			userData.score -= gameManager.boardManager.shotCost;
 			gameManager.leaderboard.UpdateScore( userData );
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}
@@ -131,5 +124,6 @@ public class User : MonoBehaviour
 	{
 		m_AllowShooting = false;
 		m_Shots = new Queue<GameObject>();
+		points = 0;
 	}
 }

@@ -116,8 +116,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 10864372}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: -0.09, y: 0, z: -1}
-  m_LocalScale: {x: 0.1, y: 0.5, z: 1}
+  m_LocalPosition: {x: -0.09, y: 0.055, z: -1}
+  m_LocalScale: {x: 0.16666667, y: 0.5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 691302734}
@@ -168,7 +168,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.804, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1 &98688513
@@ -307,7 +307,6 @@ GameObject:
   - 114: {fileID: 262150156}
   - 114: {fileID: 262150161}
   - 114: {fileID: 262150160}
-  - 95: {fileID: 262150162}
   - 114: {fileID: 262150163}
   - 114: {fileID: 262150159}
   - 114: {fileID: 262150158}
@@ -385,37 +384,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebad20b950c5483b96c3652c9d0ab3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingNumberOfPegs: 300
-  startingNumberOfTriggers: 3
-  startingNumberOfBumpers: 0
+  startingNumberOfPegs: 49
   turret: {fileID: 1625687869}
   barrelMotor: {fileID: 606167367}
-  boardAnimator: {fileID: 262150162}
-  shotCost: 1
-  pegPopScoreMin: 1
-  pegPopScoreMax: 500
-  bumperPopScore: 5000
-  triggerScore: 10
-  bucketScore: 1
-  jackpotIncrement: 10
-  rainbowCycleHue: 0
-  rainbowCycleSpeedMin: 0.05
-  rainbowCycleSpeedMax: 2
   emotePrefab: {fileID: 1000013607543106, guid: 09b53ff9bc793457fb6749deee31b06e,
     type: 2}
   pegPrefab: {fileID: 1000013640237658, guid: 4658b3f4d97e940be87ad3cb9eac314c, type: 2}
-  triggerPrefab: {fileID: 1000010353542916, guid: 4b930e5faf3924ddf8e4d144cba2fe21,
-    type: 2}
-  jackpotTriggerPrefab: {fileID: 1000013965404786, guid: 46e6fd5dfae634376a4a51234466ed7a,
-    type: 2}
-  bumperPrefab: {fileID: 1000010556111194, guid: 3e8704bd896b943b1b9f0e35bd2fed26,
-    type: 2}
   pointsLabelPrefab: {fileID: 1000010793769950, guid: 9ba7e9714ad494aec9bbb0d6a61a225e,
     type: 2}
   pegWalls: {fileID: 1054681216}
   pegParent: {fileID: 666608124}
   emoteParent: {fileID: 541506173}
-  jackpot: {fileID: 1504744882}
   boardFrozen:
     m_PersistentCalls:
       m_Calls: []
@@ -427,7 +406,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   m_SecondsBetweenShots: 0.05
-  m_SecondsBetweenBumperShots: 1
   m_SecondsToLetPegsBounce: 2
 --- !u!114 &262150161
 MonoBehaviour:
@@ -441,23 +419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   usersParent: {fileID: 1857462769}
---- !u!95 &262150162
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 262150155}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 30c437f2168624f50bfd28cf393feaa0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &262150163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,7 +460,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 512290269}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -834,8 +795,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 691302730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16, y: -19.6, z: 0}
-  m_LocalScale: {x: 20, y: 4, z: 1}
+  m_LocalPosition: {x: -16, y: -9.6, z: 0}
+  m_LocalScale: {x: 12, y: 4, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1847484594}
@@ -1049,7 +1010,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 784446356}
-  - {fileID: 1504744881}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_AnchorMin: {x: 0, y: 0}
@@ -1075,7 +1035,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &784446356
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1092,7 +1052,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 14, y: -10}
-  m_SizeDelta: {x: 296, y: 0}
+  m_SizeDelta: {x: 296, y: 41}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &784446357
 MonoBehaviour:
@@ -1347,7 +1307,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1185733423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -20, z: 0}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1414,111 +1374,6 @@ BoxCollider2D:
   m_Offset: {x: -0.5, y: 10}
   serializedVersion: 2
   m_Size: {x: 1, y: 50}
---- !u!1 &1504744880
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 224: {fileID: 1504744881}
-  - 222: {fileID: 1504744883}
-  - 114: {fileID: 1504744882}
-  - 114: {fileID: 1504744885}
-  - 114: {fileID: 1504744884}
-  m_Layer: 5
-  m_Name: Jackpot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1504744881
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1504744880}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 770780874}
-  m_RootOrder: 1
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 316, y: 0}
-  m_Pivot: {x: 1, y: 1}
---- !u!114 &1504744882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1504744880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 50
-    m_Alignment: 1
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'Jackpot:
-
-'
---- !u!222 &1504744883
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1504744880}
---- !u!114 &1504744884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1504744880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1741964061, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 2
---- !u!114 &1504744885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1504744880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1, y: -1}
-  m_UseGraphicAlpha: 1
 --- !u!1 &1608521177
 GameObject:
   m_ObjectHideFlags: 0
@@ -1545,7 +1400,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1608521177}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -20, z: 0}
+  m_LocalPosition: {x: 0, y: -9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1635,7 +1490,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1625687865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1711,15 +1566,15 @@ Camera:
   m_BackGroundColor: {r: 0.3921569, g: 0.27058825, b: 0.63529414, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.25
+    x: 0
     y: 0
-    width: 0.5
+    width: 1
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 10
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1772,8 +1627,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1847484593}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 0.09, y: 0, z: -1}
-  m_LocalScale: {x: 0.1, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0.09, y: 0.055, z: -1}
+  m_LocalScale: {x: 0.16666667, y: 0.5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 691302734}
@@ -1824,7 +1679,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.804, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1 &1857462768
