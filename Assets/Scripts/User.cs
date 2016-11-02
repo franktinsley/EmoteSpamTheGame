@@ -7,6 +7,9 @@ public class User : MonoBehaviour
 {
 	public UserData userData;
 	public int points;
+	public int heat;
+	public bool overheated;
+	public float repeatPeriod = 1f;
 
 	const float m_SecondsBetweenShots = 0.2f;
 
@@ -17,6 +20,32 @@ public class User : MonoBehaviour
 	Queue<GameObject> m_Shots = new Queue<GameObject>();
 	bool m_Shooting;
 	bool m_AllowShooting;
+	float m_NextRepeatTime;
+	TwitchChatClient m_TwitchChatClient;
+
+	void Start()
+	{
+		m_TwitchChatClient = TwitchChatClient.singleton;
+		m_NextRepeatTime = Time.time + repeatPeriod;
+	}
+
+	void Update()
+	{
+		if( Time.time > m_NextRepeatTime )
+		{
+			m_NextRepeatTime += repeatPeriod;
+			if( heat > 0 )
+			{
+				heat--;
+				if( overheated && heat < m_BoardManager.cool )
+				{
+					overheated = false;
+					heat = 0;
+					m_TwitchChatClient.SendWhisper( userData.userName, "Cooldown complete!" );
+				}
+			}
+		}
+	}
 
 	void OnDisable()
 	{
@@ -60,9 +89,16 @@ public class User : MonoBehaviour
 	{
 		UpdateUserData( message );
 
-		if( message.emoteData != null )
+		if( !overheated )
 		{
-			ShootEmotes( message.emoteData );
+			if( message.emoteData != null )
+			{
+				ShootEmotes( message.emoteData );
+			}
+		}
+		else
+		{
+			m_TwitchChatClient.SendWhisper( userData.userName, "Wait until cooldown complete to shoot again!" );
 		}
 	}
 
@@ -100,7 +136,15 @@ public class User : MonoBehaviour
 	{
 		while( m_Shots.Count > 0 )
 		{
+			if( heat >= m_BoardManager.overheat )
+			{
+				overheated = true;
+				m_TwitchChatClient.SendWhisper( userData.userName, "Overheated!" );
+				m_Shots.Clear();
+				break;
+			}
 			m_Shooting = true;
+			heat++;
 			GameObject shot = m_Shots.Dequeue();
 			m_Turret.Shoot( shot );
 			GameManager gameManager = GameManager.singleton;
@@ -125,5 +169,6 @@ public class User : MonoBehaviour
 		m_AllowShooting = false;
 		m_Shots = new Queue<GameObject>();
 		points = 0;
+		heat = 0;
 	}
 }

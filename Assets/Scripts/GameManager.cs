@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
 		SetUnityPreferences();
 		SubscribeToEvents();
 		StartGame();
+		//TwitchChatClient.singleton.EnableWhispers();
 	}
 
 	void OnDestroy()

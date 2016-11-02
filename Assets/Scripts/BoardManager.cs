@@ -6,6 +6,8 @@ using UnityEngine.Events;
 public class BoardManager : MonoBehaviour
 {
 	public int startingNumberOfPegs = 99;
+	public int overheat = 25;
+	public int cool = 20;
 	public Turret turret;
 	public Animator barrelMotor;
 	public GameObject emotePrefab;
@@ -37,14 +39,10 @@ public class BoardManager : MonoBehaviour
 
 	public void PegHit( Peg peg, Emote emote )
 	{
-		User user = emote.owner;
-		if( peg.owner == user )
+		if( emote.owner != peg.owner )
 		{
-			peg.SetOwner( null );
-		}
-		else
-		{
-			peg.SetOwner( user );
+			peg.SetOwner( emote.owner );
+			Destroy( emote.gameObject );
 		}
 	}
 

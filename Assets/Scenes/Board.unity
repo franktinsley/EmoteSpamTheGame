@@ -368,10 +368,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7dbbc0d4d493c9459f189a8d886e55e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _userName: twitchplayskappachinko
-  _oAuthPassword: oauth:yl5rqxpj0u67tkggdaz357c2zxcxt4
+  _userName: EmoteSpamTheGame
+  _oAuthPassword: oauth:n565qn5h2x95001u3xngmgyo30i1qf
   _autoJoinChannels:
   - emotespamthegame
+  - witwix
   _autoEnableWhispers: 0
 --- !u!114 &262150160
 MonoBehaviour:
@@ -384,7 +385,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebad20b950c5483b96c3652c9d0ab3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingNumberOfPegs: 49
+  startingNumberOfPegs: 199
+  overheat: 20
+  cool: 15
   turret: {fileID: 1625687869}
   barrelMotor: {fileID: 606167367}
   emotePrefab: {fileID: 1000013607543106, guid: 09b53ff9bc793457fb6749deee31b06e,
@@ -460,7 +463,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 512290269}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -480,7 +483,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: -2}
   serializedVersion: 2
-  m_Size: {x: 35.55556, y: 4}
+  m_Size: {x: 61.2, y: 4}
 --- !u!1 &513946531
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &691302731
 Animator:
   serializedVersion: 3
@@ -857,7 +860,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 732207765}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.777779, y: -8, z: 0}
+  m_LocalPosition: {x: 24.8, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1235,7 +1238,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0.5}
   serializedVersion: 2
-  m_Size: {x: 37.55556, y: 1}
+  m_Size: {x: 60, y: 1}
 --- !u!1 &1183456720
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,7 +1310,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1185733423}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: 0}
+  m_LocalPosition: {x: 0, y: -16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1327,7 +1330,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 2}
   serializedVersion: 2
-  m_Size: {x: 35.55556, y: 4}
+  m_Size: {x: 64.4, y: 4}
 --- !u!1 &1263840853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,7 +1356,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1263840853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.777779, y: -8, z: 0}
+  m_LocalPosition: {x: -24.8, y: -8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1400,7 +1403,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1608521177}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -9, z: 0}
+  m_LocalPosition: {x: 0, y: -13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1432,7 +1435,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: -4}
   serializedVersion: 2
-  m_Size: {x: 37.55556, y: 4}
+  m_Size: {x: 57.7, y: 4}
 --- !u!1 &1625687865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,7 +1493,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1625687865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 14, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1574,7 +1577,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 14
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
