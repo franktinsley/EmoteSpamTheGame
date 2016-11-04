@@ -7,9 +7,9 @@ public class User : MonoBehaviour
 {
 	public UserData userData;
 	public int points;
-	public int heat;
-	public bool overheated;
 	public float repeatPeriod = 1f;
+	[ Range( 0.2f, 1f ) ]
+	public float scaleEmotes = 1f;
 
 	const float m_SecondsBetweenShots = 0.2f;
 
@@ -21,11 +21,11 @@ public class User : MonoBehaviour
 	bool m_Shooting;
 	bool m_AllowShooting;
 	float m_NextRepeatTime;
-	TwitchChatClient m_TwitchChatClient;
+	//TwitchChatClient m_TwitchChatClient;
 
 	void Start()
 	{
-		m_TwitchChatClient = TwitchChatClient.singleton;
+		//m_TwitchChatClient = TwitchChatClient.singleton;
 		m_NextRepeatTime = Time.time + repeatPeriod;
 	}
 
@@ -34,16 +34,7 @@ public class User : MonoBehaviour
 		if( Time.time > m_NextRepeatTime )
 		{
 			m_NextRepeatTime += repeatPeriod;
-			if( heat > 0 )
-			{
-				heat--;
-				if( overheated && heat < m_BoardManager.cool )
-				{
-					overheated = false;
-					heat = 0;
-					m_TwitchChatClient.SendWhisper( userData.userName, "Cooldown complete!" );
-				}
-			}
+
 		}
 	}
 
@@ -88,17 +79,10 @@ public class User : MonoBehaviour
 	public void HandleMessage( TwitchChatMessage message )
 	{
 		UpdateUserData( message );
-
-		if( !overheated )
+		TwitchChatMessage.EmoteData[] emoteData = message.emoteData;
+		if( emoteData != null )
 		{
-			if( message.emoteData != null )
-			{
-				ShootEmotes( message.emoteData );
-			}
-		}
-		else
-		{
-			m_TwitchChatClient.SendWhisper( userData.userName, "Wait until cooldown complete to shoot again!" );
+			ShootEmotes( emoteData );
 		}
 	}
 
@@ -136,16 +120,9 @@ public class User : MonoBehaviour
 	{
 		while( m_Shots.Count > 0 )
 		{
-			if( heat >= m_BoardManager.overheat )
-			{
-				overheated = true;
-				m_TwitchChatClient.SendWhisper( userData.userName, "Overheated!" );
-				m_Shots.Clear();
-				break;
-			}
 			m_Shooting = true;
-			heat++;
 			GameObject shot = m_Shots.Dequeue();
+			shot.transform.localScale *= scaleEmotes;
 			m_Turret.Shoot( shot );
 			GameManager gameManager = GameManager.singleton;
 			gameManager.leaderboard.UpdateScore( userData );
@@ -169,6 +146,5 @@ public class User : MonoBehaviour
 		m_AllowShooting = false;
 		m_Shots = new Queue<GameObject>();
 		points = 0;
-		heat = 0;
 	}
 }

@@ -2,11 +2,15 @@
 
 public class HiddenGameObject : MonoBehaviour
 {
-	public bool setRotation;
-	public float rotationZAngle;
-	public float gravityScale;
-	public RigidbodyConstraints2D constraints;
-	public CollisionDetectionMode2D collisionDetectionMode;
+	[ SerializeField ] bool m_StartHidden;
+	[ SerializeField ] bool m_SetRotation;
+	[ SerializeField ] float m_RotationZAngle;
+	[ SerializeField ] float m_GravityScale;
+	[ SerializeField ] bool m_UseAutoMass;
+	[ SerializeField ] RigidbodyConstraints2D m_Constraints;
+	[ SerializeField ] CollisionDetectionMode2D m_CollisionDetectionMode;
+
+	bool m_IsHidden;
 
 	public bool isHidden
 	{
@@ -36,27 +40,24 @@ public class HiddenGameObject : MonoBehaviour
 			}
 			else
 			{
-				if( setRotation )
+				if( m_SetRotation )
 				{
 					Vector3 eulerAngles = transform.rotation.eulerAngles;
-					eulerAngles = new Vector3( eulerAngles.x, eulerAngles.y, rotationZAngle );
+					eulerAngles = new Vector3( eulerAngles.x, eulerAngles.y, m_RotationZAngle );
 					transform.rotation = Quaternion.Euler( eulerAngles );
 				}
 				if( rigidbody2D == null )
 				{
 					rigidbody2D = gameObject.AddComponent<Rigidbody2D>();
-					rigidbody2D.gravityScale = gravityScale;
-					rigidbody2D.constraints = constraints;
-					rigidbody2D.collisionDetectionMode = collisionDetectionMode;
+					rigidbody2D.useAutoMass = m_UseAutoMass;
+					rigidbody2D.gravityScale = m_GravityScale;
+					rigidbody2D.constraints = m_Constraints;
+					rigidbody2D.collisionDetectionMode = m_CollisionDetectionMode;
 				}
 			}
 			m_IsHidden = value;
 		}
 	}
-
-	[ SerializeField ] bool m_StartHidden;
-
-	bool m_IsHidden;
 
 	void Awake()
 	{
