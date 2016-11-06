@@ -35,37 +35,6 @@ public class BoardManager : MonoBehaviour
 		StartCoroutine( CreateBoardCoroutine() );
 	}
 
-	public void PegHit( Peg peg, Emote emote )
-	{
-		if( emote.owner != peg.owner )
-		{
-			peg.SetOwner( emote.owner );
-		}
-	}
-
-	public void BucketHit( User user )
-	{
-		foreach( var peg in m_Pegs )
-		{
-			if( peg.owner == user )
-			{
-				peg.Pop();
-				user.points++;
-			}
-		}
-		m_Pegs.RemoveAll( peg => peg.owner == user );
-		if( user.points > ( startingNumberOfPegs / 2 ) )
-		{
-			UserWins( user );
-			CreateBoard();
-		}
-	}
-
-	void UserWins( User user )
-	{
-		
-	}
-
 	IEnumerator CreateBoardCoroutine()
 	{
 		barrelMotor.speed = 10f;

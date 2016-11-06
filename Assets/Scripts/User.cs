@@ -6,36 +6,30 @@ using UnityEngine;
 public class User : MonoBehaviour
 {
 	public UserData userData;
-	public int points;
-	public float repeatPeriod = 1f;
-	[ Range( 0.2f, 1f ) ]
-	public float scaleEmotes = 1f;
 
 	const float m_SecondsBetweenShots = 0.2f;
+	const int m_MaxLevel = 5;
+	const int m_LevelCost = 1000;
+	const string m_Help = "!help";
+	const string m_CheckStats = "!mystats";
+	const string m_PurchaseUpgrade = "!upgrade";
+	const string m_SetPowerLevel = "!setpower";
 
+	int[] m_ShotCosts = { 1, 5, 10, 15, 20 };
 	string m_UserDataFilePath;
+	TwitchChatClient m_TwitchChatClient;
+	GameManager m_GameManager;
 	BoardManager m_BoardManager;
 	Leaderboard m_Leaderboard;
 	Turret m_Turret;
 	Queue<GameObject> m_Shots = new Queue<GameObject>();
 	bool m_Shooting;
 	bool m_AllowShooting;
-	float m_NextRepeatTime;
-	//TwitchChatClient m_TwitchChatClient;
+	int m_SelectedPower = 1;
 
 	void Start()
 	{
-		//m_TwitchChatClient = TwitchChatClient.singleton;
-		m_NextRepeatTime = Time.time + repeatPeriod;
-	}
-
-	void Update()
-	{
-		if( Time.time > m_NextRepeatTime )
-		{
-			m_NextRepeatTime += repeatPeriod;
-
-		}
+		m_TwitchChatClient = TwitchChatClient.singleton;
 	}
 
 	void OnDisable()
@@ -62,11 +56,16 @@ public class User : MonoBehaviour
 		{
 			userData.userName = userName;
 		}
+		if( userData.level < 1 )
+		{
+			userData.level = 1;
+		}
 		var userGameObject = new GameObject( userName );
 		userGameObject.transform.parent = parent;
 		user = userGameObject.AddComponent<User>();
 		user.userData = userData;
 		user.m_UserDataFilePath = userDataFilePath;
+		user.m_GameManager = GameManager.singleton;
 		user.m_BoardManager = GameManager.singleton.boardManager;
 		user.m_Turret = GameManager.singleton.boardManager.turret;
 		user.m_BoardManager.boardFrozen.AddListener( user.OnBoardFrozen );
@@ -79,10 +78,107 @@ public class User : MonoBehaviour
 	public void HandleMessage( TwitchChatMessage message )
 	{
 		UpdateUserData( message );
+
+		CheckForCommand( message.chatMessagePlainText );
+
 		TwitchChatMessage.EmoteData[] emoteData = message.emoteData;
 		if( emoteData != null )
 		{
 			ShootEmotes( emoteData );
+		}
+	}
+
+	public void ScorePop( Peg peg )
+	{
+		int popReward = m_GameManager.popReward;
+		userData.emotes += popReward;
+		userData.score += popReward;
+		PointsLabel.InstantiatePointsLabelGameObject( popReward.ToString(), peg.transform.position );
+	}
+
+	void CheckForCommand( string text )
+	{
+		switch( text )
+		{
+			case m_Help:
+				Help();
+			break;
+			case m_CheckStats:
+				CheckStats();
+			break;
+			case m_PurchaseUpgrade:
+				PurchaseUpgrade();
+			break;
+			default:
+				if( text.Contains( m_SetPowerLevel ) )
+				{
+					int powerLevel;
+					string stringAfterCommand = text.After( m_SetPowerLevel );
+					if( int.TryParse( stringAfterCommand, out powerLevel ) )
+					{
+						SetPowerLevel( powerLevel );
+					}
+				}
+			break;
+		}
+	}
+
+	void Help()
+	{
+		m_TwitchChatClient.SendWhisper( userData.userName, "Use all these commands and stuff!" );
+	}
+
+	void CheckStats()
+	{
+		m_TwitchChatClient.SendWhisper( userData.userName,
+			"Max Unlocked Power: " + userData.level + ", " +
+			"Currently Selected Power: " + m_SelectedPower + ", " +
+			"Emotes: " + userData.emotes + ", " +
+			"Score: " + userData.score );
+	}
+
+	void PurchaseUpgrade()
+	{
+		int levelEmoteCost = userData.level * m_LevelCost;
+		if( userData.level >= m_MaxLevel )
+		{
+			m_TwitchChatClient.SendWhisper( userData.userName,
+				"You have already unlocked the maximum power level of " + m_MaxLevel + "!" );
+		}
+		else if( userData.emotes >= levelEmoteCost )
+		{
+			userData.emotes -= levelEmoteCost;
+			userData.level++;
+			m_TwitchChatClient.SendWhisper( userData.userName,
+				"Purchased unlock of max power level " + userData.level +
+				". Enter command `!setpower " + userData.level + "` to use it!" );
+		}
+		else
+		{
+			m_TwitchChatClient.SendWhisper( userData.userName,
+				"You don't have enough emotes to unlock the next level! You have " +
+				userData.emotes + " but you need " + levelEmoteCost + "." );
+		}
+	}
+
+	void SetPowerLevel( int powerLevel )
+	{
+		if( powerLevel > 0 && powerLevel <= userData.level )
+		{
+			m_SelectedPower = powerLevel;
+			m_TwitchChatClient.SendWhisper( userData.userName, "Power level set to " + powerLevel + "." );
+		}
+		else if( powerLevel > userData.level && powerLevel <= m_MaxLevel )
+		{
+			m_TwitchChatClient.SendWhisper( userData.userName, "You haven't reached that power level yet." );
+		}
+		else if( powerLevel > m_MaxLevel )
+		{
+			m_TwitchChatClient.SendWhisper( userData.userName, "That power level is too high!" );
+		}
+		else if( powerLevel < 1 )
+		{
+			m_TwitchChatClient.SendWhisper( userData.userName, "That power level is too low!" );
 		}
 	}
 
@@ -111,7 +207,7 @@ public class User : MonoBehaviour
 	{
 		foreach( var emote in emoteData )
 		{
-			GameObject emoteGameObject = Emote.InstantiateEmoteGameObject( emote.id, this );
+			GameObject emoteGameObject = Emote.InstantiateEmoteGameObject( emote.id, this, m_SelectedPower );
 			m_Shots.Enqueue( emoteGameObject );
 		}
 	}
@@ -122,7 +218,7 @@ public class User : MonoBehaviour
 		{
 			m_Shooting = true;
 			GameObject shot = m_Shots.Dequeue();
-			shot.transform.localScale *= scaleEmotes;
+			PurchaseShot( m_ShotCosts[ shot.gameObject.GetComponent<Emote>().power - 1 ] );
 			m_Turret.Shoot( shot );
 			GameManager gameManager = GameManager.singleton;
 			gameManager.leaderboard.UpdateScore( userData );
@@ -130,6 +226,22 @@ public class User : MonoBehaviour
 		}
 		m_Shooting = false;
 		yield return null;
+	}
+
+	void PurchaseShot( int shotCost )
+	{
+		if( userData.emotes >= shotCost )
+		{
+			userData.emotes -= shotCost;
+		}
+		else
+		{
+			m_SelectedPower = 1;
+			if( userData.emotes > 0 )
+			{
+				userData.emotes--;
+			}
+		}
 	}
 
 	void OnBoardFrozen()
@@ -145,6 +257,5 @@ public class User : MonoBehaviour
 	{
 		m_AllowShooting = false;
 		m_Shots = new Queue<GameObject>();
-		points = 0;
 	}
 }

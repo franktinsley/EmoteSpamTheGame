@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 	public UserManager userManager;
 	public BoardManager boardManager;
 	public Leaderboard leaderboard;
+	public int popReward = 10;
+	public int finalPopReward = 100;
 
 	void Awake()
 	{
@@ -28,7 +30,7 @@ public class GameManager : MonoBehaviour
 		SetUnityPreferences();
 		SubscribeToEvents();
 		StartGame();
-		//TwitchChatClient.singleton.EnableWhispers();
+		TwitchChatClient.singleton.EnableWhispers();
 	}
 
 	void OnDestroy()

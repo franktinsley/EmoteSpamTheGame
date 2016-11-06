@@ -5,11 +5,12 @@ using UnityEngine;
 public class Emote : MonoBehaviour
 {
 	public User owner;
+	public int power;
 
 	SpriteRenderer m_SpriteRenderer;
 	int m_EmoteID;
 
-	public static GameObject InstantiateEmoteGameObject( int id, User owner )
+	public static GameObject InstantiateEmoteGameObject( int id, User owner, int power )
 	{
 		BoardManager boardManager = GameManager.singleton.boardManager;
 		var emoteGameObject = Instantiate(
@@ -20,12 +21,22 @@ public class Emote : MonoBehaviour
 			emote.OnBoardReset );
 		emote.owner = owner;
 		emote.SetEmote( id );
+		emote.power = power;
 		return emoteGameObject;
 	}
 
 	void Awake()
 	{
 		m_SpriteRenderer = GetComponent<SpriteRenderer>();
+	}
+
+	void OnCollisionEnter2D( Collision2D collision )
+	{
+		Peg peg = collision.gameObject.GetComponent<Peg>();
+		if( peg != null )
+		{
+			peg.TakeDamage( power, this );
+		}
 	}
 
 	void OnDestroy()

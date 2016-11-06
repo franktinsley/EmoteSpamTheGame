@@ -68,11 +68,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184655611b8c9489a9556ad66bd306f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setRotation: 0
-  rotationZAngle: 0
-  gravityScale: 0
-  constraints: 0
   m_StartHidden: 1
+  m_SetRotation: 0
+  m_RotationZAngle: 0
+  m_GravityScale: 0
+  m_UseAutoMass: 0
+  m_Constraints: 0
+  m_CollisionDetectionMode: 0
 --- !u!114 &114000014122354590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -84,8 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7c2810a4fdc41ef818dbfb20dc0f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
-  invincible: 1
+  health: 30
   m_StartingColliderRadius: 0.4
   m_FrozenColliderRadius: 0.09
 --- !u!212 &212000011624955330
