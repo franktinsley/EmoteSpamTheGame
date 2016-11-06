@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd7c2810a4fdc41ef818dbfb20dc0f96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 10
   m_StartingColliderRadius: 0.4
   m_FrozenColliderRadius: 0.09
 --- !u!212 &212000011624955330

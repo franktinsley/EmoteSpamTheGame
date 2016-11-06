@@ -6,30 +6,36 @@ using UnityEngine;
 public class User : MonoBehaviour
 {
 	public UserData userData;
+	public int ammo;
 
+	const int m_MaxAmmo = 10;
+	const float m_SecondsBetweenReload = 1f;
 	const float m_SecondsBetweenShots = 0.2f;
-	const int m_MaxLevel = 5;
-	const int m_LevelCost = 1000;
-	const string m_Help = "!help";
-	const string m_CheckStats = "!mystats";
-	const string m_PurchaseUpgrade = "!upgrade";
-	const string m_SetPowerLevel = "!setpower";
+	const string m_ScoreCommand = "!score";
 
-	int[] m_ShotCosts = { 1, 5, 10, 15, 20 };
+	bool m_Shooting;
+	float m_NextReloadTime;
 	string m_UserDataFilePath;
+	Queue<GameObject> m_Shots = new Queue<GameObject>();
 	TwitchChatClient m_TwitchChatClient;
 	GameManager m_GameManager;
 	BoardManager m_BoardManager;
 	Leaderboard m_Leaderboard;
 	Turret m_Turret;
-	Queue<GameObject> m_Shots = new Queue<GameObject>();
-	bool m_Shooting;
-	bool m_AllowShooting;
-	int m_SelectedPower = 1;
 
 	void Start()
 	{
 		m_TwitchChatClient = TwitchChatClient.singleton;
+		ammo = m_MaxAmmo;
+		m_NextReloadTime = Time.time + m_SecondsBetweenReload;
+	}
+
+	void Update()
+	{
+		if( ShouldReload() )
+		{
+			Reload();
+		}
 	}
 
 	void OnDisable()
@@ -55,10 +61,6 @@ public class User : MonoBehaviour
 		if( !fileFound )
 		{
 			userData.userName = userName;
-		}
-		if( userData.level < 1 )
-		{
-			userData.level = 1;
 		}
 		var userGameObject = new GameObject( userName );
 		userGameObject.transform.parent = parent;
@@ -91,95 +93,23 @@ public class User : MonoBehaviour
 	public void ScorePop( Peg peg )
 	{
 		int popReward = m_GameManager.popReward;
-		userData.emotes += popReward;
 		userData.score += popReward;
-		PointsLabel.InstantiatePointsLabelGameObject( popReward.ToString(), peg.transform.position );
+		ammo = m_MaxAmmo;
 	}
 
 	void CheckForCommand( string text )
 	{
 		switch( text )
 		{
-			case m_Help:
-				Help();
-			break;
-			case m_CheckStats:
-				CheckStats();
-			break;
-			case m_PurchaseUpgrade:
-				PurchaseUpgrade();
-			break;
-			default:
-				if( text.Contains( m_SetPowerLevel ) )
-				{
-					int powerLevel;
-					string stringAfterCommand = text.After( m_SetPowerLevel );
-					if( int.TryParse( stringAfterCommand, out powerLevel ) )
-					{
-						SetPowerLevel( powerLevel );
-					}
-				}
+			case m_ScoreCommand:
+				Score();
 			break;
 		}
 	}
 
-	void Help()
+	void Score()
 	{
-		m_TwitchChatClient.SendWhisper( userData.userName, "Use all these commands and stuff!" );
-	}
-
-	void CheckStats()
-	{
-		m_TwitchChatClient.SendWhisper( userData.userName,
-			"Max Unlocked Power: " + userData.level + ", " +
-			"Currently Selected Power: " + m_SelectedPower + ", " +
-			"Emotes: " + userData.emotes + ", " +
-			"Score: " + userData.score );
-	}
-
-	void PurchaseUpgrade()
-	{
-		int levelEmoteCost = userData.level * m_LevelCost;
-		if( userData.level >= m_MaxLevel )
-		{
-			m_TwitchChatClient.SendWhisper( userData.userName,
-				"You have already unlocked the maximum power level of " + m_MaxLevel + "!" );
-		}
-		else if( userData.emotes >= levelEmoteCost )
-		{
-			userData.emotes -= levelEmoteCost;
-			userData.level++;
-			m_TwitchChatClient.SendWhisper( userData.userName,
-				"Purchased unlock of max power level " + userData.level +
-				". Enter command `!setpower " + userData.level + "` to use it!" );
-		}
-		else
-		{
-			m_TwitchChatClient.SendWhisper( userData.userName,
-				"You don't have enough emotes to unlock the next level! You have " +
-				userData.emotes + " but you need " + levelEmoteCost + "." );
-		}
-	}
-
-	void SetPowerLevel( int powerLevel )
-	{
-		if( powerLevel > 0 && powerLevel <= userData.level )
-		{
-			m_SelectedPower = powerLevel;
-			m_TwitchChatClient.SendWhisper( userData.userName, "Power level set to " + powerLevel + "." );
-		}
-		else if( powerLevel > userData.level && powerLevel <= m_MaxLevel )
-		{
-			m_TwitchChatClient.SendWhisper( userData.userName, "You haven't reached that power level yet." );
-		}
-		else if( powerLevel > m_MaxLevel )
-		{
-			m_TwitchChatClient.SendWhisper( userData.userName, "That power level is too high!" );
-		}
-		else if( powerLevel < 1 )
-		{
-			m_TwitchChatClient.SendWhisper( userData.userName, "That power level is too low!" );
-		}
+		m_TwitchChatClient.SendWhisper( userData.userName, "Your score: " + userData.score );
 	}
 
 	void UpdateUserData( TwitchChatMessage message )
@@ -191,10 +121,24 @@ public class User : MonoBehaviour
 		userData.isMod = message.isMod;
 	}
 
+	bool ShouldReload()
+	{
+		return ammo < m_MaxAmmo && Time.time > m_NextReloadTime;
+	}
+
+	void Reload()
+	{
+		m_NextReloadTime += m_SecondsBetweenReload;
+		ammo++;
+		PointsLabel.InstantiatePointsLabelGameObject(
+			"<color=" + userData.userNameColor + ">Ammo: " + ammo + "</color>",
+			m_Turret.barrel.position );
+	}
+
 	void ShootEmotes( TwitchChatMessage.EmoteData[] emoteData )
 	{
 		EnqueueEmoteShots( emoteData );
-		if( m_AllowShooting )
+		if( m_BoardManager.allowUserShooting )
 		{
 			if( !m_Shooting )
 			{
@@ -207,7 +151,7 @@ public class User : MonoBehaviour
 	{
 		foreach( var emote in emoteData )
 		{
-			GameObject emoteGameObject = Emote.InstantiateEmoteGameObject( emote.id, this, m_SelectedPower );
+			GameObject emoteGameObject = Emote.InstantiateEmoteGameObject( emote.id, this );
 			m_Shots.Enqueue( emoteGameObject );
 		}
 	}
@@ -217,36 +161,31 @@ public class User : MonoBehaviour
 		while( m_Shots.Count > 0 )
 		{
 			m_Shooting = true;
-			GameObject shot = m_Shots.Dequeue();
-			PurchaseShot( m_ShotCosts[ shot.gameObject.GetComponent<Emote>().power - 1 ] );
-			m_Turret.Shoot( shot );
-			GameManager gameManager = GameManager.singleton;
-			gameManager.leaderboard.UpdateScore( userData );
+			if( ammo > 0 )
+			{
+				GameObject shot = m_Shots.Dequeue();
+				m_Turret.Shoot( shot );
+				GameManager gameManager = GameManager.singleton;
+				gameManager.leaderboard.UpdateScore( userData );
+				ammo--;
+				PointsLabel.InstantiatePointsLabelGameObject(
+					"<color=" + userData.userNameColor + ">Ammo: " + ammo + "</color>",
+					m_Turret.barrel.position );
+			}
+			else
+			{
+				PointsLabel.InstantiatePointsLabelGameObject(
+					"<color=" + userData.userNameColor + ">click</color>",
+					m_Turret.barrel.position );
+			}
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}
 		m_Shooting = false;
 		yield return null;
 	}
 
-	void PurchaseShot( int shotCost )
-	{
-		if( userData.emotes >= shotCost )
-		{
-			userData.emotes -= shotCost;
-		}
-		else
-		{
-			m_SelectedPower = 1;
-			if( userData.emotes > 0 )
-			{
-				userData.emotes--;
-			}
-		}
-	}
-
 	void OnBoardFrozen()
 	{
-		m_AllowShooting = true;
 		if( m_Shots.Count > 0 )
 		{
 			StartCoroutine( ShootCoroutine() );
@@ -255,7 +194,6 @@ public class User : MonoBehaviour
 
 	void OnBoardReset()
 	{
-		m_AllowShooting = false;
 		m_Shots = new Queue<GameObject>();
 	}
 }

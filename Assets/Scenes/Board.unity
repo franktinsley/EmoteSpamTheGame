@@ -1323,11 +1323,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfe39d8261e25416eb2aac19e3371e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  barrel: {fileID: 513946532}
   m_ShootForceMultiplier: 20
   m_SpriteRenderers:
   - {fileID: 1625687866}
   - {fileID: 513946533}
-  m_Barrel: {fileID: 513946532}
 --- !u!1 &1802640874
 GameObject:
   m_ObjectHideFlags: 0

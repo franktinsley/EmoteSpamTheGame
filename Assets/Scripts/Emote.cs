@@ -10,7 +10,7 @@ public class Emote : MonoBehaviour
 	SpriteRenderer m_SpriteRenderer;
 	int m_EmoteID;
 
-	public static GameObject InstantiateEmoteGameObject( int id, User owner, int power )
+	public static GameObject InstantiateEmoteGameObject( int id, User owner )
 	{
 		BoardManager boardManager = GameManager.singleton.boardManager;
 		var emoteGameObject = Instantiate(
@@ -21,7 +21,6 @@ public class Emote : MonoBehaviour
 			emote.OnBoardReset );
 		emote.owner = owner;
 		emote.SetEmote( id );
-		emote.power = power;
 		return emoteGameObject;
 	}
 

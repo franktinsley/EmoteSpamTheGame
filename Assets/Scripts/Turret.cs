@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
+	public Transform barrel;
+
 	[ SerializeField ] float m_ShootForceMultiplier = 10f;
 	[ SerializeField ] List<SpriteRenderer> m_SpriteRenderers;
-	[ SerializeField ] Transform m_Barrel;
 
 	public void Shoot( GameObject projectile )
 	{
@@ -18,10 +19,10 @@ public class Turret : MonoBehaviour
 			TintSpriteRenderers( userNameColor );
 		}
 		projectile.transform.position = new Vector3(
-			m_Barrel.position.x,
-			m_Barrel.position.y,
+			barrel.position.x,
+			barrel.position.y,
 			projectile.transform.position.z );
-		projectile.transform.rotation = m_Barrel.rotation;
+		projectile.transform.rotation = barrel.rotation;
 		projectile.GetComponent<HiddenGameObject>().isHidden = false;
 		Rigidbody2D projectileRigidbody =
 			projectile.GetComponent<Rigidbody2D>();

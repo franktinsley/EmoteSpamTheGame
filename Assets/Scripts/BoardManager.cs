@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class BoardManager : MonoBehaviour
 {
+	public bool allowUserShooting;
 	public int startingNumberOfPegs = 99;
 	public Turret turret;
 	public Animator barrelMotor;
@@ -30,13 +31,14 @@ public class BoardManager : MonoBehaviour
 
 	public void CreateBoard()
 	{
-		m_Pegs.Clear();
-		boardReset.Invoke();
 		StartCoroutine( CreateBoardCoroutine() );
 	}
 
 	IEnumerator CreateBoardCoroutine()
 	{
+		allowUserShooting = false;
+		m_Pegs.Clear();
+		boardReset.Invoke();
 		barrelMotor.speed = 10f;
 		pegWalls.SetActive( true );
 		turret.transform.Translate( Vector3.down * 4f );
@@ -54,6 +56,7 @@ public class BoardManager : MonoBehaviour
 		turret.transform.Translate( Vector3.up * 4f );
 		pegWalls.SetActive( false );
 		barrelMotor.speed = 1f;
+		allowUserShooting = true;
 		boardFrozen.Invoke();
 		yield return null;
 	}

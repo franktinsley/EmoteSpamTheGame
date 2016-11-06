@@ -38,6 +38,13 @@ public class Peg : MonoBehaviour
 		if( health < 1 )
 		{
 			Pop( emote );
+			PointsLabel.InstantiatePointsLabelGameObject(
+				"<color=" + emote.owner.userData.userNameColor + ">POPPED!</color>",
+				transform.position );
+		}
+		else
+		{
+			PointsLabel.InstantiatePointsLabelGameObject( "HP: " + health, transform.position );
 		}
 	}
 
