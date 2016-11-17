@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class User : MonoBehaviour
 {
-	public UserData userData;
-	public int ammo;
+	public UserData model;
 
 	const int m_MaxAmmo = 10;
-	const float m_SecondsBetweenReload = 1f;
+	const float m_SecondsBetweenReload = 2f;
 	const float m_SecondsBetweenShots = 0.2f;
 	const string m_ScoreCommand = "!score";
 
@@ -22,11 +21,12 @@ public class User : MonoBehaviour
 	BoardManager m_BoardManager;
 	Leaderboard m_Leaderboard;
 	Turret m_Turret;
+	UserActivityTableCell m_UserActivityTableCell;
 
 	void Start()
 	{
 		m_TwitchChatClient = TwitchChatClient.singleton;
-		ammo = m_MaxAmmo;
+		model.ammo = m_MaxAmmo;
 		m_NextReloadTime = Time.time + m_SecondsBetweenReload;
 	}
 
@@ -40,7 +40,7 @@ public class User : MonoBehaviour
 
 	void OnDisable()
 	{
-		JsonScriptableObject.SaveToFile<UserData>( userData, m_UserDataFilePath );
+		JsonScriptableObject.SaveToFile<UserData>( model, m_UserDataFilePath );
 	}
 
 	void OnDestroy()
@@ -65,15 +65,16 @@ public class User : MonoBehaviour
 		var userGameObject = new GameObject( userName );
 		userGameObject.transform.parent = parent;
 		user = userGameObject.AddComponent<User>();
-		user.userData = userData;
+		user.model = userData;
 		user.m_UserDataFilePath = userDataFilePath;
+		user.m_UserActivityTableCell = UserActivityTableCell.InstantiateUserActivityTableCellGameObject( user.model );
 		user.m_GameManager = GameManager.singleton;
 		user.m_BoardManager = GameManager.singleton.boardManager;
 		user.m_Turret = GameManager.singleton.boardManager.turret;
 		user.m_BoardManager.boardFrozen.AddListener( user.OnBoardFrozen );
 		user.m_BoardManager.boardReset.AddListener( user.OnBoardReset );
 		user.m_Leaderboard = GameManager.singleton.leaderboard;
-		user.m_Leaderboard.UpdateScore( user.userData );
+		user.m_Leaderboard.UpdateScore( user.model );
 		return user;
 	}
 
@@ -84,17 +85,18 @@ public class User : MonoBehaviour
 		CheckForCommand( message.chatMessagePlainText );
 
 		TwitchChatMessage.EmoteData[] emoteData = message.emoteData;
-		if( emoteData != null )
+		if( emoteData != null && emoteData.Length > 0 )
 		{
 			ShootEmotes( emoteData );
+			m_UserActivityTableCell.Activity();
 		}
 	}
 
 	public void ScorePop( Peg peg )
 	{
 		int popReward = m_GameManager.popReward;
-		userData.score += popReward;
-		ammo = m_MaxAmmo;
+		model.score += popReward;
+		model.ammo = m_MaxAmmo;
 	}
 
 	void CheckForCommand( string text )
@@ -109,29 +111,30 @@ public class User : MonoBehaviour
 
 	void Score()
 	{
-		m_TwitchChatClient.SendWhisper( userData.userName, "Your score: " + userData.score );
+		m_TwitchChatClient.SendWhisper( model.userName,
+			"Your score: " + model.score );
 	}
 
 	void UpdateUserData( TwitchChatMessage message )
 	{
-		userData.userName = message.userName;
-		userData.userNameColor = message.userNameColor;
-		userData.isSubscriber = message.isSubscriber;
-		userData.isTurbo = message.isTurbo;
-		userData.isMod = message.isMod;
+		model.userName = message.userName;
+		model.userNameColor = message.userNameColor;
+		model.isSubscriber = message.isSubscriber;
+		model.isTurbo = message.isTurbo;
+		model.isMod = message.isMod;
 	}
 
 	bool ShouldReload()
 	{
-		return ammo < m_MaxAmmo && Time.time > m_NextReloadTime;
+		return model.ammo < m_MaxAmmo && Time.time > m_NextReloadTime;
 	}
 
 	void Reload()
 	{
 		m_NextReloadTime += m_SecondsBetweenReload;
-		ammo++;
+		model.ammo++;
 		PointsLabel.InstantiatePointsLabelGameObject(
-			"<color=" + userData.userNameColor + ">Ammo: " + ammo + "</color>",
+			"<color=" + model.userNameColor + ">Ammo: " + model.ammo + "</color>",
 			m_Turret.barrel.position );
 	}
 
@@ -161,21 +164,21 @@ public class User : MonoBehaviour
 		while( m_Shots.Count > 0 )
 		{
 			m_Shooting = true;
-			if( ammo > 0 )
+			GameObject shot = m_Shots.Dequeue();
+			if( model.ammo > 0 )
 			{
-				GameObject shot = m_Shots.Dequeue();
 				m_Turret.Shoot( shot );
 				GameManager gameManager = GameManager.singleton;
-				gameManager.leaderboard.UpdateScore( userData );
-				ammo--;
+				gameManager.leaderboard.UpdateScore( model );
+				model.ammo--;
 				PointsLabel.InstantiatePointsLabelGameObject(
-					"<color=" + userData.userNameColor + ">Ammo: " + ammo + "</color>",
+					"<color=" + model.userNameColor + ">Ammo: " + model.ammo + "</color>",
 					m_Turret.barrel.position );
 			}
 			else
 			{
 				PointsLabel.InstantiatePointsLabelGameObject(
-					"<color=" + userData.userNameColor + ">click</color>",
+					"<color=" + model.userNameColor + ">click</color>",
 					m_Turret.barrel.position );
 			}
 			yield return new WaitForSeconds( m_SecondsBetweenShots );

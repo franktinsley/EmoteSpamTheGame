@@ -9,6 +9,7 @@ public class UserData : ScriptableObject, IComparable<UserData>
 	public bool isTurbo;
 	public bool isMod;
 	public int score;
+	public int ammo;
 
 	public int CompareTo( UserData other )
 	{

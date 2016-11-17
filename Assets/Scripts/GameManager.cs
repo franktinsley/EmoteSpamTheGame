@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 	public UserManager userManager;
 	public BoardManager boardManager;
 	public Leaderboard leaderboard;
+	public UserActivityTable userActivityTable;
 	public int popReward = 10;
 	public int finalPopReward = 100;
 

@@ -23,7 +23,7 @@ public class HiddenGameObject : MonoBehaviour
 			var spriteRenderer = GetComponent<SpriteRenderer>();
 			if( spriteRenderer != null )
 			{
-				spriteRenderer.enabled = !value;
+				//spriteRenderer.enabled = !value;
 			}
 			var collider2D = GetComponent<Collider2D>();
 			if( collider2D != null )

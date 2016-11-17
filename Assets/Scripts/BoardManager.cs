@@ -48,7 +48,7 @@ public class BoardManager : MonoBehaviour
 		{
 			GameObject pegGameObject = Instantiate( pegPrefab );
 			m_Pegs.Add( pegGameObject.GetComponent<Peg>() );
-			pegGameObject.transform.parent = pegParent;
+			pegGameObject.transform.SetParent( pegParent );
 			turret.Shoot( pegGameObject );
 			yield return waitForSecondsBetweenShots;
 		}

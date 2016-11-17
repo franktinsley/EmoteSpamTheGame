@@ -45,7 +45,7 @@ public class UserManager : MonoBehaviour
 			{
 				string userName = Path.GetFileNameWithoutExtension( userDataFilePath );
 				User user = User.CreateInstance( userName, userDataFilePath, usersParent );
-				users.Add( user.userData.userName, user );
+				users.Add( user.model.userName, user );
 			}
 		}
 	}

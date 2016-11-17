@@ -39,7 +39,7 @@ public class Peg : MonoBehaviour
 		{
 			Pop( emote );
 			PointsLabel.InstantiatePointsLabelGameObject(
-				"<color=" + emote.owner.userData.userNameColor + ">POPPED!</color>",
+				"<color=" + emote.owner.model.userNameColor + ">POPPED!</color>",
 				transform.position );
 		}
 		else

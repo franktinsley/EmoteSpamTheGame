@@ -15,7 +15,7 @@ public class Turret : MonoBehaviour
 		{
 			Color userNameColor;
 			ColorUtility.TryParseHtmlString(
-				emote.owner.userData.userNameColor, out userNameColor );
+				emote.owner.model.userNameColor, out userNameColor );
 			TintSpriteRenderers( userNameColor );
 		}
 		projectile.transform.position = new Vector3(
