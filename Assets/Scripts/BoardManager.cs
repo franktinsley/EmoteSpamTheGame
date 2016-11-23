@@ -8,7 +8,7 @@ public class BoardManager : MonoBehaviour
 	public bool allowUserShooting;
 	public int startingNumberOfPegs = 99;
 	public Turret turret;
-	public Animator barrelMotor;
+	//public Animator barrelMotor;
 	public GameObject emotePrefab;
 	public GameObject pegPrefab;
 	public GameObject pointsLabelPrefab;
@@ -39,23 +39,23 @@ public class BoardManager : MonoBehaviour
 		allowUserShooting = false;
 		m_Pegs.Clear();
 		boardReset.Invoke();
-		barrelMotor.speed = 10f;
+		//barrelMotor.speed = 10f;
 		pegWalls.SetActive( true );
 		turret.transform.Translate( Vector3.down * 4f );
 		var waitForSecondsBetweenShots = new WaitForSeconds( m_SecondsBetweenShots );
 		yield return waitForSecondsBetweenShots;
 		for( int i = 0; i < startingNumberOfPegs; i++ )
 		{
-			GameObject pegGameObject = Instantiate( pegPrefab );
+			var pegGameObject = Instantiate( pegPrefab );
+			pegGameObject.transform.SetParent( pegParent, true );
 			m_Pegs.Add( pegGameObject.GetComponent<Peg>() );
-			pegGameObject.transform.SetParent( pegParent );
 			turret.Shoot( pegGameObject );
 			yield return waitForSecondsBetweenShots;
 		}
 		yield return new WaitForSeconds( m_SecondsToLetPegsBounce );
 		turret.transform.Translate( Vector3.up * 4f );
 		pegWalls.SetActive( false );
-		barrelMotor.speed = 1f;
+		//barrelMotor.speed = 1f;
 		allowUserShooting = true;
 		boardFrozen.Invoke();
 		yield return null;

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Turret : MonoBehaviour
 {
-	public Transform barrel;
+	public Transform muzzle;
 
 	[ SerializeField ] float m_ShootForceMultiplier = 10f;
-	[ SerializeField ] List<SpriteRenderer> m_SpriteRenderers;
+	[ SerializeField ] List<Image> m_Images;
 
 	public void Shoot( GameObject projectile )
 	{
@@ -19,10 +20,10 @@ public class Turret : MonoBehaviour
 			TintSpriteRenderers( userNameColor );
 		}
 		projectile.transform.position = new Vector3(
-			barrel.position.x,
-			barrel.position.y,
+			muzzle.position.x,
+			muzzle.position.y,
 			projectile.transform.position.z );
-		projectile.transform.rotation = barrel.rotation;
+		projectile.transform.rotation = muzzle.rotation;
 		projectile.GetComponent<HiddenGameObject>().isHidden = false;
 		Rigidbody2D projectileRigidbody =
 			projectile.GetComponent<Rigidbody2D>();
@@ -32,9 +33,9 @@ public class Turret : MonoBehaviour
 
 	void TintSpriteRenderers( Color color )
 	{
-		foreach( var _spriteRenderer in m_SpriteRenderers )
+		foreach( var image in m_Images )
 		{
-			_spriteRenderer.color = color;
+			image.color = color;
 		}
 	}
 }

@@ -135,7 +135,7 @@ public class User : MonoBehaviour
 		model.ammo++;
 		PointsLabel.InstantiatePointsLabelGameObject(
 			"<color=" + model.userNameColor + ">Ammo: " + model.ammo + "</color>",
-			m_Turret.barrel.position );
+			m_Turret.muzzle.position );
 	}
 
 	void ShootEmotes( TwitchChatMessage.EmoteData[] emoteData )
@@ -173,13 +173,13 @@ public class User : MonoBehaviour
 				model.ammo--;
 				PointsLabel.InstantiatePointsLabelGameObject(
 					"<color=" + model.userNameColor + ">Ammo: " + model.ammo + "</color>",
-					m_Turret.barrel.position );
+					m_Turret.muzzle.position );
 			}
 			else
 			{
 				PointsLabel.InstantiatePointsLabelGameObject(
 					"<color=" + model.userNameColor + ">click</color>",
-					m_Turret.barrel.position );
+					m_Turret.muzzle.position );
 			}
 			yield return new WaitForSeconds( m_SecondsBetweenShots );
 		}
