@@ -155,6 +155,7 @@ public class User : MonoBehaviour
 		foreach( var emote in emoteData )
 		{
 			GameObject emoteGameObject = Emote.InstantiateEmoteGameObject( emote.id, this );
+			emoteGameObject.SetActive( false );
 			m_Shots.Enqueue( emoteGameObject );
 		}
 	}

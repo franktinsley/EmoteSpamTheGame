@@ -23,7 +23,7 @@ public class Turret : MonoBehaviour
 			barrel.position.y,
 			projectile.transform.position.z );
 		projectile.transform.rotation = barrel.rotation;
-		projectile.GetComponent<HiddenGameObject>().isHidden = false;
+		projectile.SetActive( true );
 		Rigidbody2D projectileRigidbody =
 			projectile.GetComponent<Rigidbody2D>();
 		projectileRigidbody.AddRelativeForce(

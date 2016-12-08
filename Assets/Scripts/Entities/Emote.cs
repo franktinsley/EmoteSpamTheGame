@@ -15,7 +15,7 @@ public class Emote : MonoBehaviour
 		BoardManager boardManager = GameManager.singleton.boardManager;
 		var emoteGameObject = Instantiate(
 			boardManager.emotePrefab,
-			boardManager.emoteParent ) as GameObject;
+			boardManager.emoteParent );
 		var emote = emoteGameObject.GetComponent<Emote>();
 		GameManager.singleton.boardManager.boardReset.AddListener(
 			emote.OnBoardReset );
